@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <link rel="shortcut icon" href="../Logo/Logo1.ico">
+		<title>Pelican Example, by SantaClausNL</title>
+		<script src="../Pelican.js"></script>
+		<style>
+			body{ background-color: rgb(51, 51, 51); }
+			#PelicanCanvas{
+				box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+				margin: auto;
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			let ball = {pos: vec(50, 50), vel: vec(randomInt(100, 200), randomInt(75, 150)), r: 50, col: 'rgba(255, 255, 255, 0.7)'};
+
+			function setup() {
+				init(640, 360);
+			}
+
+			function update(elapsed) {
+				clear('rgb(51, 51, 51)');
+				for(let i = 0; i < width; i += 20) {
+					for(let j = 0; j < height; j += 20) {
+						let color = `rgb(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)})`;
+						rect(i, j, 20, 20, color);
+					}
+				}
+
+				if(ball.pos.x > width-ball.r || ball.pos.x < ball.r) ball.vel.x *= -1;
+				if(ball.pos.y > height-ball.r || ball.pos.y < ball.r) ball.vel.y *= -1;
+				ball.pos.constrain(ball.r, width-ball.r, ball.r, height-ball.r);
+				ball.pos.add(ball.vel.x*elapsed, ball.vel.y*elapsed);
+				circle(ball.pos.x, ball.pos.y, ball.r, ball.col);
+				text(ball.pos.x, ball.pos.y+10, "DVD", 'black', 'center', 32, 'Comic Sans MS');
+			}
+		</script>
+	</body>
+</html>
