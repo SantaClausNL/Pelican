@@ -296,13 +296,9 @@ function vec(x, y) { return new Vector(x, y); }
 function fromAngle(angle) { return vec(Math.cos(angle), Math.sin(angle)); }
 
 // convert degree angle to radians
-function radians(degrees) {
-	return degrees*Math.PI/180;
-}
+function radians(degrees) { return degrees*Math.PI/180; }
 // convert degree angle to radians
-function degrees(radians) {
-	return radians*180/Math.PI;
-}
+function degrees(radians) { return radians*180/Math.PI; }
 
 // Perlin Noise class, create 1 instance and get values via noise.next(x); function
 class Noise{
