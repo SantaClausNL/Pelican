@@ -1,14 +1,15 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-class Pelican{
-	constructor() {
-		this.version = "v2.3.25";
-		this.canvas = document.createElement("CANVAS");
-		this.canvasContext = this.canvas.getContext('2d');
-	}
-}
+const PelicanVersion = "v2.3.27";
+//class Pelican{
+//	constructor() {
+//		this.version = "v2.3.25";
+//		this.canvas = document.createElement("CANVAS");
+//		this.canvasContext = this.canvas.getContext('2d');
+//	}
+//}
 window.addEventListener("load", () => PelicanSetup());
-let c, ctx, width, height, noUpdate = false, addOns = [], mouse = {x: 0, y: 0}, mouseDown = false;
+let c, ctx, width, height, noUpdate = false, /*addOns = [],*/usePixiJS = false, mouse = {x: 0, y: 0}, mouseDown = false;
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
@@ -248,18 +249,17 @@ function collide(pos, vel, w, h, objPos, objW, objH) {
 	}
 }
 // function to swap 2 elements of an array
-Array.swap = function(array, i, j) {
-	const temp = array[i];
-	array[i] = array[j];
-	array[j] = temp;
+Array.swap = function(i, j) {
+	const temp = this[i];
+	this[i] = this[j];
+	this[j] = temp;
 }
 // an array shuffle function, since sort function already exists
-Array.shuffle = function(array) {
-	for(let i = array.length - 1; i > 0; i--) {
-		const j = round(random(i+1));
-		swap(array, i, j);
+Array.shuffle = function() {
+	for(let i = this.length - 1; i >= 0; i--) {
+		const j = randomInt(i+1);
+		this.swap(i, j);
 	}
-	return array;
 }
 // lerp function
 function lerp(start, end, amt) {
