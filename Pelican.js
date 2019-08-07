@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.3.30";
+const PelicanVersion = "v2.3.33";
 //class Pelican{
 //	constructor() {
 //		this.version = "v2.3.25";
@@ -139,7 +139,7 @@ function circle(centerX, centerY, radius, color, strokeWidth) {
 function text(textX, textY, showWords, color, align, size, font) {
 	ctx.fillStyle = color;
 	if(align !== undefined) ctx.textAlign = align; // "start|left|end|right|center"
-	if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size != undefined) ctx.font = String(size) + "px Sans-Serif";
+	if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size !== undefined) ctx.font = String(size) + "px Sans-Serif";
 	ctx.fillText(showWords, textX, textY);
 	if(align !== undefined) ctx.textAlign = "start";
 	if(size !== undefined) ctx.font = "10px Sans-Serif";
