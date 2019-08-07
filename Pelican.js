@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.3.27";
+const PelicanVersion = "v2.3.29";
 //class Pelican{
 //	constructor() {
 //		this.version = "v2.3.25";
@@ -202,9 +202,9 @@ function constrain(val, minVal, maxVal) { if(val > maxVal) return maxVal; else i
 function sigmoid(val) { return 1/(1+Math.pow(Math.E, -val)); }
 // function to calculate the distance between 2 x,y pairs or 1 vector and 1 x,y pair or 2 vectors
 function dist(x1, y1, x2, y2) {
-	if(x2 instanceof Vector) {
+	if(y2 !== undefined) {
 		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-	} else if(y1 instanceof Vector) {
+	} else if(x2 !== undefined) {
 		return Math.sqrt((x2.x-x1)*(x2.x-x1) + (x2.y-y1)*(x2.y-y1));
 	} else {
 		return Math.sqrt((y1.x-x1.x)*(y1.x-x1.x) + (y1.y-x1.y)*(y1.y-x1.y));
@@ -282,10 +282,7 @@ class Vector{
 	sub(x, y) { if(x instanceof Vector) this.x -= x.x, this.y -= x.y; else this.x -= x, this.y -= y; }
 	mult(x, y) { if(x instanceof Vector) this.x *= x.x, this.y *= x.y; else this.x *= x, this.y *= y; }
 	equals(vec2) { return (this.x == vec2.x && this.y == vec2.y); }
-	constrain(lowX, hiX, lowY, hiY) {
-		if(this.x > hiX) this.x = hiX; else if(this.x < lowX) this.x = lowX;
-		if(this.y > hiY) this.y = hiY; else if(this.y < lowY) this.y = lowY;
-	}
+	constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
 	angleTo(vec2, degree) { // angle to another vector, returns radians if 'degree' is false
 		let a = Math.atan2(vec2.y - this.y, vec2.x - this.x);
 		return degree ? a * 180 / Math.PI : a;
