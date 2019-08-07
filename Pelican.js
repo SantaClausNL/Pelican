@@ -287,15 +287,14 @@ class Vector{
 	degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
 	radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
 	fromAngle(angle, radius) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
-		if(radius === undefined) radius = 1;
 		if(angle instanceof Vector) angle = this.radiansTo(angle);
-		return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
+		return vec(Math.cos(angle) * (radius || 1) + this.x, Math.sin(angle) * (radius || 1) + this.y);
 	}
 	collides(x, y, w, h) { return (this.x < x+w && this.x > x && this.y < y+h && this.y > y); }
 }
 function vec(x, y) { return new Vector(x, y); }
 // get vector from an angle
-function fromAngle(angle) { return vec(Math.cos(angle), Math.sin(angle)); }
+function fromAngle(angle, radius) { return vec(Math.cos(angle) * (radius || 1), Math.sin(angle) * (radius || 1)); }
 // convert degree angle to radians
 function radians(degrees) { return degrees*Math.PI/180; }
 // convert radians angle to degrees
