@@ -249,13 +249,13 @@ function collide(pos, vel, w, h, objPos, objW, objH) {
 	}
 }
 // function to swap 2 elements of an array
-Array.swap = function(i, j) {
+Array.prototype.swap = function(i, j) {
 	const temp = this[i];
 	this[i] = this[j];
 	this[j] = temp;
 }
 // an array shuffle function, since sort function already exists
-Array.shuffle = function() {
+Array.prototype.shuffle = function() {
 	for(let i = this.length - 1; i >= 0; i--) {
 		const j = randomInt(i+1);
 		this.swap(i, j);
