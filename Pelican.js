@@ -73,18 +73,18 @@ function clear(color) {
 	} else ctx.clearRect(0, 0, width, height);
 }
 // fuction for drawing a filled/stroked rectangle
-function rect(x, y, w, h, color, stroke) {
-	if(stroke === undefined) {
+function rect(x, y, w, h, color, strokeWidth) {
+	if(strokeWidth === undefined) {
 		ctx.fillStyle = color;
 		ctx.fillRect(x, y, w, h);
 	} else {
 		ctx.strokeStyle = color;
-		ctx.lineWidth = stroke;
+		ctx.lineWidth = strokeWidth;
 		ctx.strokeRect(x, y, w, h);
 	}
 }
 // fuction for drawing a filled/stroked rectangle with curved corners
-function roundedRect(x, y, w, h, r1, r2, r3, r4, color, stroke) {
+function roundedRect(x, y, w, h, r1, r2, r3, r4, color, strokeWidth) {
 	ctx.beginPath();
 	ctx.moveTo(x + r1, y);
 	ctx.lineTo(x + w - r2, y);
@@ -96,19 +96,19 @@ function roundedRect(x, y, w, h, r1, r2, r3, r4, color, stroke) {
 	ctx.lineTo(x, y + r1);
 	ctx.quadraticCurveTo(x, y, x + r1, y);
 	ctx.closePath();
-	if(stroke !== undefined) {
-		ctx.strokeStyle = color;
-		ctx.lineWidth = stroke;
-		ctx.stroke();
-	} else {
+	if(strokeWidth === undefined) {
 		ctx.fillStyle = color;
 		ctx.fill();
+	} else {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = strokeWidth;
+		ctx.stroke();
 	}
 }
 // function for drawing a line between two points
-function line(x1, y1, x2, y2, thickness, color) {
+function line(x1, y1, x2, y2, width, color) {
 	ctx.strokeStyle = color;
-	ctx.lineWidth = thickness;
+	ctx.lineWidth = width;
 	ctx.beginPath();
 	ctx.moveTo(x1, y1);
 	ctx.lineTo(x2, y2);
@@ -116,14 +116,18 @@ function line(x1, y1, x2, y2, thickness, color) {
 	ctx.stroke();
 }
 // function for drawing a circle
-function circle(centerX, centerY, radius, fillColor, stroke) {
-	ctx.fillStyle = fillColor;
-	ctx.strokeStyle = fillColor;
-	ctx.lineWidth = stroke;
+function circle(centerX, centerY, radius, color, strokeWidth) {
 	ctx.beginPath();
 	ctx.arc(centerX, centerY, radius, 0, Math.PI*2, true);
 	ctx.closePath();
-	if(stroke != undefined) ctx.stroke(); else ctx.fill();
+	if(strokeWidth === undefined) {
+		ctx.fillStyle = color;
+		ctx.fill();
+	} else {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = strokeWidth;
+		ctx.stroke();
+	}
 }
 // function for drawing text
 // (optional) get a font name here: https://fonts.google.com/ and put it here: <link href="https://fonts.googleapis.com/css?family=<name(s) of font(s) seperated by |>" rel="stylesheet">
@@ -132,13 +136,13 @@ function circle(centerX, centerY, radius, fillColor, stroke) {
 //   font-family: "<font name>";
 //   src: url(assets/<font file>.ttf) format("truetype");
 // }
-function text(textX, textY, showWords, fillColor, align, size, font) {
-	ctx.fillStyle = fillColor;
-	if(align != undefined) ctx.textAlign = align; // "start|left|end|right|center"
-	if(font != undefined) ctx.font = String(size) + "px " + font; else if(size != undefined) ctx.font = String(size) + "px Sans-Serif";
+function text(textX, textY, showWords, color, align, size, font) {
+	ctx.fillStyle = color;
+	if(align !== undefined) ctx.textAlign = align; // "start|left|end|right|center"
+	if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size != undefined) ctx.font = String(size) + "px Sans-Serif";
 	ctx.fillText(showWords, textX, textY);
-	if(align != undefined) ctx.textAlign = "start";
-	if(size != undefined) ctx.font = "10px Sans-Serif";
+	if(align !== undefined) ctx.textAlign = "start";
+	if(size !== undefined) ctx.font = "10px Sans-Serif";
 }
 // function for drawing a centered image with rotation and ability to flip
 function img(image, x, y, angle, flip) {
