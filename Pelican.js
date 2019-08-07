@@ -136,11 +136,11 @@ function circle(centerX, centerY, radius, color, strokeWidth) {
 //   font-family: "<font name>";
 //   src: url(assets/<font file>.ttf) format("truetype");
 // }
-function text(textX, textY, showWords, color, align, size, font) {
+function text(x, y, string, color, align, size, font) {
 	ctx.fillStyle = color;
 	if(align !== undefined) ctx.textAlign = align; // "start|left|end|right|center"
 	if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size !== undefined) ctx.font = String(size) + "px Sans-Serif";
-	ctx.fillText(showWords, textX, textY);
+	ctx.fillText(string, x, y);
 	if(align !== undefined) ctx.textAlign = "start";
 	if(size !== undefined) ctx.font = "10px Sans-Serif";
 }
