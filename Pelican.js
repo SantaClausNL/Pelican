@@ -1,9 +1,12 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
 class Pelican{
-	
+	constructor() {
+		this.version = "v2.3.25";
+		this.canvas = document.createElement("CANVAS");
+		this.canvasContext = this.canvas.getContext('2d');
+	}
 }
-const PelicanVersion = "v2.3.25";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, noUpdate = false, addOns = [], mouse = {x: 0, y: 0}, mouseDown = false;
 
