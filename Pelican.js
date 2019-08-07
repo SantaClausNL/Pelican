@@ -1,8 +1,11 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
+class Pelican{
+	
+}
 const PelicanVersion = "v2.3.25";
 window.addEventListener("load", () => PelicanSetup());
-let c, ctx, width, height, noUpdate = false, usePixiJS = false, mouse = {x: 0, y: 0}, mouseDown = false;
+let c, ctx, width, height, noUpdate = false, addOns = [], mouse = {x: 0, y: 0}, mouseDown = false;
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
