@@ -42,7 +42,7 @@ function init(width_, height_, parentOrCanvasElement_) {
 function setupPelicanEvents() {
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
-	window.addEventListener('mousemove', (e) => { mouse = calcMouse(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
+	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
 	window.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
 	window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
 }
@@ -202,9 +202,9 @@ function constrain(val, minVal, maxVal) { if(val > maxVal) return maxVal; else i
 function sigmoid(val) { return 1/(1+Math.pow(Math.E, -val)); }
 // function to calculate the distance between 2 x,y pairs or 1 vector and 1 x,y pair or 2 vectors
 function dist(x1, y1, x2, y2) {
-	if(y2 !== undefined) {
+	if(x2 instanceof Vector) {
 		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-	} else if(x2 !== undefined) {
+	} else if(y1 instanceof Vector) {
 		return Math.sqrt((x2.x-x1)*(x2.x-x1) + (x2.y-y1)*(x2.y-y1));
 	} else {
 		return Math.sqrt((y1.x-x1.x)*(y1.x-x1.x) + (y1.y-x1.y)*(y1.y-x1.y));
@@ -248,13 +248,13 @@ function collide(pos, vel, w, h, objPos, objW, objH) {
 		}
 	}
 }
-// function to swap 2 elements of an array
+// function to swap 2 elements of an array, call <array>.swap(i, j);
 Array.prototype.swap = function(i, j) {
 	const temp = this[i];
 	this[i] = this[j];
 	this[j] = temp;
 }
-// an array shuffle function, since sort function already exists
+// an array shuffle function, call <array>.shuffle();
 Array.prototype.shuffle = function() {
 	for(let i = this.length - 1; i >= 0; i--) {
 		const j = randomInt(i+1);
@@ -262,27 +262,16 @@ Array.prototype.shuffle = function() {
 	}
 }
 // lerp function
-function lerp(start, end, amt) {
-  return start+amt*(end-start);
-}
+function lerp(start, end, amt) { return start+amt*(end-start); }
 //function that returns true for the intersection of a rectangle and circle
 function intersects(x, y, w, h, cx, cy, cr) {
 	let dx = cx-Math.max(x, Math.min(cx, x+w)), dy = cy-Math.max(y, Math.min(cy, y+h));
 	return (dx*dx + dy*dy) < cr*cr;
 }
 // get the mouse position in the form of a vector
-function calcMouse(e) {
+function getMousePos(e) {
 	const rect = c.getBoundingClientRect(), root = document.documentElement;
 	return vec(e.clientX-rect.left-root.scrollLeft, e.clientY-rect.top-root.scrollTop);
-}
-// function for sorting an array of numbers
-function quickSort(array, left, right) {
-  left = typeof left != "number" ? 0 : left;
-  right = typeof right != "number" ? array.length-1 : right;
-  let pivot = array[Math.floor((right+left)/2)], i = left, j = right;
-  while(i <= j) { while(array[i] < pivot) i++; while(array[j] > pivot) j--; if(i <= j) { swap(array, i, j); i++; j--; }}
-  if(left < i-1) quickSort(array, left, i-1);
-  if(i < right) quickSort(array, i, right);
 }
 // 2D vector class
 class Vector{
