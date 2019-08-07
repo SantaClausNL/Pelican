@@ -67,42 +67,42 @@ function PelicanUpdate(prevTime_) {
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
 function clear(color) {
-	if(color != undefined) {
+	if(color !== undefined) {
 		ctx.fillStyle = color;
 		ctx.fillRect(0, 0, width, height);
+	} else ctx.clearRect(0, 0, width, height);
+}
+// fuction for drawing a filled/stroked rectangle
+function rect(x, y, w, h, color, stroke) {
+	if(stroke === undefined) {
+		ctx.fillStyle = color;
+		ctx.fillRect(x, y, w, h);
 	} else {
-		ctx.clearRect(0, 0, width, height);
+		ctx.strokeStyle = color;
+		ctx.lineWidth = stroke;
+		ctx.strokeRect(x, y, w, h);
 	}
 }
-// fuction for drawing a filled/stroked rectangle with optional curved corners
-function rect(x, y, w, h, r1, r2, r3, r4, color, stroke) {
-	if(r2 == undefined) {
-		ctx.fillStyle = r1;
-		ctx.fillRect(x, y, w, h);
-	} else if(r3 == undefined) {
-		ctx.strokeStyle = r1;
-		ctx.lineWidth = r2;
-		ctx.strokeRect(x, y, w, h);
+// fuction for drawing a filled/stroked rectangle with curved corners
+function roundedRect(x, y, w, h, r1, r2, r3, r4, color, stroke) {
+	ctx.beginPath();
+	ctx.moveTo(x + r1, y);
+	ctx.lineTo(x + w - r2, y);
+	ctx.quadraticCurveTo(x + w, y, x + w, y + r2);
+	ctx.lineTo(x + w, y + h - r3);
+	ctx.quadraticCurveTo(x + w, y + h, x + w - r3, y + h);
+	ctx.lineTo(x + r4, y + h);
+	ctx.quadraticCurveTo(x, y + h, x, y + h - r4);
+	ctx.lineTo(x, y + r1);
+	ctx.quadraticCurveTo(x, y, x + r1, y);
+	ctx.closePath();
+	if(stroke !== undefined) {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = stroke;
+		ctx.stroke();
 	} else {
-		ctx.beginPath();
-		ctx.moveTo(x + r1, y);
-		ctx.lineTo(x + w - r2, y);
-		ctx.quadraticCurveTo(x + w, y, x + w, y + r2);
-		ctx.lineTo(x + w, y + h - r3);
-		ctx.quadraticCurveTo(x + w, y + h, x + w - r3, y + h);
-		ctx.lineTo(x + r4, y + h);
-		ctx.quadraticCurveTo(x, y + h, x, y + h - r4);
-		ctx.lineTo(x, y + r1);
-		ctx.quadraticCurveTo(x, y, x + r1, y);
-		ctx.closePath();
-		if(stroke != undefined) {
-			ctx.strokeStyle = color;
-			ctx.lineWidth = stroke;
-			ctx.stroke();
-		} else {
-			ctx.fillStyle = color;
-			ctx.fill();
-		}
+		ctx.fillStyle = color;
+		ctx.fill();
 	}
 }
 // function for drawing a line between two points
