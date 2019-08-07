@@ -280,8 +280,9 @@ class Vector{
 	set(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
 	add(x, y) { if(x instanceof Vector) this.x += x.x, this.y += x.y; else this.x += x, this.y += y; }
 	sub(x, y) { if(x instanceof Vector) this.x -= x.x, this.y -= x.y; else this.x -= x, this.y -= y; }
-	mult(x, y) { if(x instanceof Vector) this.x *= x.x, this.y *= x.y; else this.x *= x, this.y *= y; }
-	equals(vec2) { return (this.x == vec2.x && this.y == vec2.y); }
+	mult(x, y) { if(y === undefined) if(x instanceof Vector) this.x *= x.x, this.y *= x.y; else this.x *= x, this.y *= x; else this.x *= x, this.y *= y; }
+	div(x, y) { if(y === undefined) if(x instanceof Vector) this.x /= x.x, this.y /= x.y; else this.x /= x, this.y /= x; else this.x /= x, this.y /= y; }
+	equals(vec) { return (this.x == vec.x && this.y == vec.y); }
 	constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
 	degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
 	radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
