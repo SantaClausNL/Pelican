@@ -286,21 +286,20 @@ class Vector{
 	constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
 	degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
 	radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
-	fromAngle(angle, radius, velocity) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius' in a vector or velocity
-		if(radius == undefined) radius = 1;
+	fromAngle(angle, radius) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
+		if(radius === undefined) radius = 1;
 		if(angle instanceof Vector) angle = this.radiansTo(angle);
-		if(velocity != undefined) return vec(Math.cos(angle) * radius, Math.sin(angle) * radius); else return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
+		return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
 	}
 	collides(x, y, w, h) { return (this.x < x+w && this.x > x && this.y < y+h && this.y > y); }
 }
 function vec(x, y) { return new Vector(x, y); }
+// get vector from an angle
 function fromAngle(angle) { return vec(Math.cos(angle), Math.sin(angle)); }
-
 // convert degree angle to radians
 function radians(degrees) { return degrees*Math.PI/180; }
-// convert degree angle to radians
+// convert radians angle to degrees
 function degrees(radians) { return radians*180/Math.PI; }
-
 // Perlin Noise class, create 1 instance and get values via noise.next(x); function
 class Noise{
 	constructor(amp_, scl_) {
