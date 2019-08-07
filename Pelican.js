@@ -283,13 +283,11 @@ class Vector{
 	mult(x, y) { if(x instanceof Vector) this.x *= x.x, this.y *= x.y; else this.x *= x, this.y *= y; }
 	equals(vec2) { return (this.x == vec2.x && this.y == vec2.y); }
 	constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
-	angleTo(vec2, degree) { // angle to another vector, returns radians if 'degree' is false
-		let a = Math.atan2(vec2.y - this.y, vec2.x - this.x);
-		return degree ? a * 180 / Math.PI : a;
-	}
+	degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
+	radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
 	fromAngle(angle, radius, velocity) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius' in a vector or velocity
 		if(radius == undefined) radius = 1;
-		if(angle instanceof Vector) angle = this.angleTo(angle);
+		if(angle instanceof Vector) angle = this.radiansTo(angle);
 		if(velocity != undefined) return vec(Math.cos(angle) * radius, Math.sin(angle) * radius); else return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
 	}
 	collides(x, y, w, h) { return (this.x < x+w && this.x > x && this.y < y+h && this.y > y); }
