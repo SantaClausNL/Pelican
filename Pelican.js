@@ -148,7 +148,7 @@ function text(x, y, string, color, align, size, font) {
 function img(image, x, y, angle, flip) {
 	ctx.save();
 	ctx.translate(x, y);
-	if(flip != undefined) ctx.scale(-1, 1);
+	if(flip !== undefined) ctx.scale(-1, 1);
 	ctx.rotate(angle);
 	ctx.drawImage(image, -image.width/2, -image.height/2);
 	ctx.restore();
