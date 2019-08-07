@@ -184,29 +184,21 @@ function loadImage(src_, func_) {
 
 //-utility-functions----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for mapping a value
-function map(value, valueLow, valueHigh, resultLow, resultHigh) {
-	return resultLow + (resultHigh - resultLow) * (value - valueLow) / (valueHigh - valueLow); }
+function map(value, valLow, valHigh, resLow, resHigh) { return resLow + (resHigh - resLow) * (value - valLow) / (valHigh - valLow); }
 // replacement function for Math.random(), with only 1 argument it is random from 0 to argument
-function random(low, high) {
-	if(high !== undefined) return Math.random() * (high-low) + low; else return Math.random() * low; }
+function random(low, high) { if(high !== undefined) return Math.random() * (high-low) + low; else return Math.random() * low; }
 // replacement function for Math.random() rounded to integers
-function randomInt(low, high) {
-	return floor(random(low, high)); }
+function randomInt(low, high) { return floor(random(low, high)); }
 // replacement function for Math.round()
-function round(value) {
-	return Math.round(value); }
+function round(value) { return Math.round(value); }
 // replacement function for Math.floor()
-function floor(value) {
-	return Math.floor(value); }
+function floor(value) { return Math.floor(value); }
 // replacement function for Math.ceil()
-function ceil(value) {
-	return Math.ceil(value); }
+function ceil(value) { return Math.ceil(value); }
 // function for constraining a value
-function constrain(val, minVal, maxVal) {
-	if(val > maxVal) return maxVal; else if(val < minVal) return minVal; else return val; }
+function constrain(val, minVal, maxVal) { if(val > maxVal) return maxVal; else if(val < minVal) return minVal; else return val; }
 // function for calulating a point on the sigmoid curve
-function sigmoid(val) {
-	return 1/(1+Math.pow(Math.E, -val)); }
+function sigmoid(val) { return 1/(1+Math.pow(Math.E, -val)); }
 // function to calculate the distance between 2 x,y pairs or 1 vector and 1 x,y pair or 2 vectors
 function dist(x1, y1, x2, y2) {
 	if(y2 !== undefined) {
@@ -218,9 +210,7 @@ function dist(x1, y1, x2, y2) {
 	}
 }
 // function for detecting collision between rectangles
-function collision(vec1, w1, h1, vec2, w2, h2) {
-	return (Math.abs((vec1.x+w1/2) - (vec2.x+w2/2)) * 2 < (w1 + w2)) && (Math.abs((vec1.y+h1/2) - (vec2.y+h2/2)) * 2 < (h1 + h2));
-}
+function collision(vec1, w1, h1, vec2, w2, h2) { return (Math.abs((vec1.x+w1/2) - (vec2.x+w2/2)) * 2 < (w1 + w2)) && (Math.abs((vec1.y+h1/2) - (vec2.y+h2/2)) * 2 < (h1 + h2)); }
 // function for collision between a dynamic and static rectangle
 function collide(pos, vel, w, h, objPos, objW, objH) {
 	let newPos = vec(pos.x + vel.x, pos.y + vel.y);
@@ -258,13 +248,13 @@ function collide(pos, vel, w, h, objPos, objW, objH) {
 	}
 }
 // function to swap 2 elements of an array
-function swap(array, i, j) {
+Array.swap = function(array, i, j) {
 	const temp = array[i];
 	array[i] = array[j];
 	array[j] = temp;
 }
 // an array shuffle function, since sort function already exists
-function shuffle(array) {
+Array.shuffle = function(array) {
 	for(let i = array.length - 1; i > 0; i--) {
 		const j = round(random(i+1));
 		swap(array, i, j);
