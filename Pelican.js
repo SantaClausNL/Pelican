@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.3.29";
+const PelicanVersion = "v2.3.30";
 //class Pelican{
 //	constructor() {
 //		this.version = "v2.3.25";
