@@ -264,7 +264,7 @@ Array.prototype.shuffle = function() {
 // lerp function
 function lerp(start, end, amt) { return start+amt*(end-start); }
 //function that returns true for the intersection of a rectangle and circle
-function intersects(x, y, w, h, cx, cy, cr) {
+function rectCircleIntersect(x, y, w, h, cx, cy, cr) {
 	let dx = cx-Math.max(x, Math.min(cx, x+w)), dy = cy-Math.max(y, Math.min(cy, y+h));
 	return (dx*dx + dy*dy) < cr*cr;
 }
