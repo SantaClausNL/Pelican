@@ -311,8 +311,8 @@ class Noise{
 	}
 
   next(x) {
-    let sclX = x*this.scl, floorX = Math.floor(sclX), t = sclX-floorX;
-    let xMin = floorX & this.vertices-1, xMax = (xMin + 1) & this.vertices-1;
+    const sclX = x*this.scl, floorX = Math.floor(sclX), t = sclX-floorX;
+    const xMin = floorX & this.vertices-1, xMax = (xMin + 1) & this.vertices-1;
     return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
   }
 }
