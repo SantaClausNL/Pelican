@@ -8,16 +8,11 @@ class Pelican{
 		this.version = "v2.4.35";
 		this.c, this.ctx;
 
-		this.setup();
+		console.log(`Pelican ${this.version} by SantaClausNL. https://www.santaclausnl.ga/`);
+		if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
 	}
 
 	resize(width_, height_) { width = c.width = width_, height = c.height = height_; }
-
-	setup() {
-		console.log(`Pelican ${this.version} by SantaClausNL. https://www.santaclausnl.ga/`);
-		if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
-		if(typeof update === 'function' && noUpdate !== true) this.update(new Date().getTime());
-	}
 
 	update(prevTime_) {
 		const time = new Date().getTime(), elapsed = (time-prevTime_)/1000;
@@ -27,24 +22,21 @@ class Pelican{
 }
 
 function init(width_, height_, options) {
-	if(options[parent] !== undefined) {
-		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
-		options[parent].appendChild(Pelican.c);
-	} else if(options[canvas] !== undefined) {
+	if(options[canvas] !== undefined) {
 		Pelican.c = options[canvas], Pelican.ctx = c.getContext("2d");
 	} else {
 		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
-		document.documentElement.appendChild(Pelican.c);
+		if(options[parent] !== undefined) options[parent].appendChild(Pelican.c); else document.documentElement.appendChild(Pelican.c);
 	}
-
 	width = Pelican.c.width = width_, height = Pelican.c.height = height_;
 	Pelican.c.id = "PelicanCanvas";
 	
+	if(typeof update === 'function' && options[noUpdate] !== true) this.update(new Date().getTime());
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
-	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
-	window.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
-	window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
+	Pelican.c.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
+	Pelican.c.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
+	Pelican.c.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
 }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
