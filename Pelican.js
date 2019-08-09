@@ -1,15 +1,15 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-window.addEventListener("load", () => Pelican = new Pelican());
+window.addEventListener("load", () => Pelican = new PelicanClass());
 let mouse = {x: 0, y: 0}, mouseDown = false;
 
-class Pelican{
+class PelicanClass{
 	constructor() {
 		this.version = "v2.4.35";
 		this.c, this.ctx;
 
 		console.log(`Pelican ${this.version} by SantaClausNL. https://www.santaclausnl.ga/`);
-		if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
+		if(typeof setup === 'function') setup();
 	}
 
 	resize(width_, height_) { width = c.width = width_, height = c.height = height_; }
@@ -21,17 +21,18 @@ class Pelican{
 	}
 }
 
-function init(width_, height_, options) {
-	if(options !== undefined && Object.keys(options)["canvas"] !== undefined) {
+function init(width_, height_, options_) {
+	const options = Object.keys(options_);
+	if(options !== undefined && options["canvas"] !== undefined) {
 		Pelican.c = options[canvas], Pelican.ctx = c.getContext("2d");
 	} else {
 		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
-		if(options !== undefined && Object.keys(options)["parent"] !== undefined) options[parent].appendChild(Pelican.c); else document.documentElement.appendChild(Pelican.c);
+		if(options !== undefined && options["parent"] !== undefined) options[parent].appendChild(Pelican.c); else document.documentElement.appendChild(Pelican.c);
 	}
 	width = Pelican.c.width = width_, height = Pelican.c.height = height_;
 	Pelican.c.id = "PelicanCanvas";
 	
-	if(typeof update === 'function' && !(options !== undefined && options[noUpdate] === true)) this.update(new Date().getTime());
+	if(typeof update === 'function' && !(options !== undefined && options["noUpdate"] === true)) Pelican.update(new Date().getTime());
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
 	Pelican.c.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
