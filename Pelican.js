@@ -10,10 +10,19 @@ class Pelican{
 		this.setup();
 	}
 
+	resize(width_, height_) { width = c.width = width_, height = c.height = height_; }
+
 	setup() {
 		console.log(`Pelican ${this.version} by SantaClausNL. https://www.santaclausnl.ga/`);
 		if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
 		if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(new Date().getTime());
+	}
+
+	update(prevTime_) {
+		const elapsed = (new Date().getTime()-prevTime_)/1000;
+		const curTime = new Date().getTime();
+		update(elapsed);
+		requestAnimationFrame(() => PelicanUpdate(curTime));
 	}
 }
 
@@ -33,15 +42,6 @@ function init(width_, height_, parentOrCanvasElement_) {
 	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
 	window.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
 	window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
-}
-
-function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
-
-function PelicanUpdate(prevTime_) {
-	const elapsed = (new Date().getTime()-prevTime_)/1000;
-	const curTime = new Date().getTime();
-	update(elapsed);
-	requestAnimationFrame(() => PelicanUpdate(curTime));
 }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
