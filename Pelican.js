@@ -22,17 +22,16 @@ class Pelican{
 }
 
 function init(width_, height_, options) {
-	console.log(Object.keys(options));
-	if(Object.keys(options)[canvas] !== undefined) {
+	if(options !== undefined && Object.keys(options)["canvas"] !== undefined) {
 		Pelican.c = options[canvas], Pelican.ctx = c.getContext("2d");
 	} else {
 		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
-		if(options[parent] !== undefined) options[parent].appendChild(Pelican.c); else document.documentElement.appendChild(Pelican.c);
+		if(options !== undefined && Object.keys(options)["parent"] !== undefined) options[parent].appendChild(Pelican.c); else document.documentElement.appendChild(Pelican.c);
 	}
 	width = Pelican.c.width = width_, height = Pelican.c.height = height_;
 	Pelican.c.id = "PelicanCanvas";
 	
-	if(typeof update === 'function' && options[noUpdate] !== true) this.update(new Date().getTime());
+	if(typeof update === 'function' && !(options !== undefined && options[noUpdate] === true)) this.update(new Date().getTime());
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
 	Pelican.c.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
