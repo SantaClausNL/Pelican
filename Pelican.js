@@ -218,11 +218,11 @@ function dist(x1, y1, x2, y2) {
 function collision(vec1, w1, h1, vec2, w2, h2) { return (Math.abs((vec1.x+w1/2) - (vec2.x+w2/2)) * 2 < (w1 + w2)) && (Math.abs((vec1.y+h1/2) - (vec2.y+h2/2)) * 2 < (h1 + h2)); }
 // function for collision between a dynamic and static rectangle
 function collide(pos, vel, w, h, objPos, objW, objH) {
-	let newPos = vec(pos.x + vel.x, pos.y + vel.y);
+	const newPos = vec(pos.x + vel.x, pos.y + vel.y);
 	if(collision(newPos, w, h, objPos, objW, objH)) {
 		if(pos.x+w > objPos.x && pos.x < objPos.x+objW && pos.y+h > objPos.y && pos.y < objPos.y+objH) {
-			let distTop = pos.y+h-objPos.y, distBottom = objPos.y+objH-pos.y;
-			let distLeft = pos.x+w-objPos.x, distRight = objPos.x+objW-pos.x;
+			const distTop = pos.y+h-objPos.y, distBottom = objPos.y+objH-pos.y;
+			const distLeft = pos.x+w-objPos.x, distRight = objPos.x+objW-pos.x;
 			if(Math.min(distTop, distBottom) < Math.min(distLeft, distRight)) {
 				if(distTop < distBottom) pos.y -= distTop; else pos.y += distBottom;
 			} else {
