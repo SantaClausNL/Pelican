@@ -1,18 +1,20 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-window.addEventListener("load", () => PelicanSetup());
+window.addEventListener("load", () => Pelican = new Pelican());
 let c, ctx, width, height, noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = false;
 
 class Pelican{
 	constructor() {
 		this.version = "v2.4.35";
-	}
-}
 
-function PelicanSetup() {
-	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
-	if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
-	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(new Date().getTime());
+		this.setup();
+	}
+
+	setup() {
+		console.log(`Pelican ${this.version} by SantaClausNL. https://www.santaclausnl.ga/`);
+		if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
+		if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(new Date().getTime());
+	}
 }
 
 function init(width_, height_, parentOrCanvasElement_) {
