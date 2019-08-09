@@ -7,21 +7,17 @@ let c, ctx, width, height, noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = f
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
 	if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
-	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(new Date().getTime());
-//	if(typeof update === 'function' && !(options !== undefined && options["noUpdate"] === true)) PelicanUpdate(new Date().getTime());
+	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(window.performance.now());
+//	if(typeof update === 'function' && options["noUpdate"] !== true) PelicanUpdate(new Date().getTime());
 }
 
-function init(width_, height_, options_) {
-	const options = Object.keys(options_);
-	if(options !== undefined && options["canvas"] !== undefined) {
-		c = options[canvas], ctx = c.getContext("2d");
+function init(width_, height_, options) {
+	if(options["canvas"] !== undefined) {
+		c = options["canvas"], ctx = c.getContext("2d");
 	} else {
 		c = document.createElement("CANVAS"), ctx = c.getContext("2d");
-		if(options !== undefined && options["parent"] !== undefined) options[parent].appendChild(c); else document.documentElement.appendChild(c);
+		if(options["parent"] !== undefined) options["parent"].appendChild(c); else document.documentElement.appendChild(c);
 	}
-	width = c.width = width_, height = c.height = height_;
-	c.id = "PelicanCanvas";
-		
 	width = c.width = width_, height = c.height = height_;
 	c.id = "PelicanCanvas";
 	
@@ -35,10 +31,10 @@ function init(width_, height_, options_) {
 function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
 
 function PelicanUpdate(prevTime_) {
-	const elapsed = (new Date().getTime()-prevTime_)/1000;
-	const curTime = new Date().getTime();
+	const time = window.performance.now();
+	const elapsed = (time-prevTime_)/1000;
 	update(elapsed);
-	requestAnimationFrame(() => PelicanUpdate(curTime));
+	requestAnimationFrame(() => PelicanUpdate(time));
 }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
