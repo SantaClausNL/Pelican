@@ -7,16 +7,16 @@ let PelicanReqAnimateID;
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
-	if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
+	if(typeof setup === 'function') setup();
 	if(typeof update === 'function') PelicanUpdate(window.performance.now());
 }
 
 function init(width_, height_, options) {
-	if(options["canvas"] !== undefined) {
+	if(defined(options) && options["canvas"] !== undefined) {
 		c = options["canvas"], ctx = c.getContext("2d");
 	} else {
 		c = document.createElement("CANVAS"), ctx = c.getContext("2d");
-		if(options["parent"] !== undefined) options["parent"].appendChild(c); else document.documentElement.appendChild(c);
+		if(defined(options) && options["parent"] !== undefined) options["parent"].appendChild(c); else document.documentElement.appendChild(c);
 	}
 	width = c.width = width_, height = c.height = height_;
 	c.id = "PelicanCanvas";
@@ -39,6 +39,7 @@ function PelicanUpdate(prevTime_) {
 
 function noUpdate() {	cancelAnimationFrame(PelicanReqAnimateID); }
 
+function defined(variable) { return variable !== undefined; }
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
 function clear(color) {
