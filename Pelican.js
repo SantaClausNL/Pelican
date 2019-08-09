@@ -7,8 +7,7 @@ let c, ctx, width, height, noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = f
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
 	if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
-	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(window.performance.now());
-//	if(typeof update === 'function' && options["noUpdate"] !== true) PelicanUpdate(new Date().getTime());
+	if(typeof update === 'function') PelicanUpdate(window.performance.now());
 }
 
 function init(width_, height_, options) {
@@ -31,6 +30,7 @@ function init(width_, height_, options) {
 function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
 
 function PelicanUpdate(prevTime_) {
+	if(noUpdate) return;
 	const time = window.performance.now();
 	const elapsed = (time-prevTime_)/1000;
 	update(elapsed);
