@@ -8,19 +8,19 @@ function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
 	if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
 	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(new Date().getTime());
-//	if(typeof update === 'function' && !(options !== undefined && options["noUpdate"] === true)) Pelican.update(new Date().getTime());
+//	if(typeof update === 'function' && !(options !== undefined && options["noUpdate"] === true)) PelicanUpdate(new Date().getTime());
 }
 
 function init(width_, height_, options_) {
 	const options = Object.keys(options_);
 	if(options !== undefined && options["canvas"] !== undefined) {
-		Pelican.c = options[canvas], Pelican.ctx = c.getContext("2d");
+		c = options[canvas], ctx = c.getContext("2d");
 	} else {
-		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
-		if(options !== undefined && options["parent"] !== undefined) options[parent].appendChild(Pelican.c); else document.documentElement.appendChild(Pelican.c);
+		c = document.createElement("CANVAS"), ctx = c.getContext("2d");
+		if(options !== undefined && options["parent"] !== undefined) options[parent].appendChild(c); else document.documentElement.appendChild(c);
 	}
-	width = Pelican.c.width = width_, height = Pelican.c.height = height_;
-	Pelican.c.id = "PelicanCanvas";
+	width = c.width = width_, height = c.height = height_;
+	c.id = "PelicanCanvas";
 		
 	width = c.width = width_, height = c.height = height_;
 	c.id = "PelicanCanvas";
