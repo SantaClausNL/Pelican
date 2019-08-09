@@ -2,7 +2,8 @@
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
 const PelicanVersion = "v2.4.35";
 window.addEventListener("load", () => PelicanSetup());
-let c, ctx, width, height, noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = false;
+let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
+let PelicanReqAnimateID;
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
@@ -30,12 +31,13 @@ function init(width_, height_, options) {
 function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
 
 function PelicanUpdate(prevTime_) {
-	if(noUpdate) return;
 	const time = window.performance.now();
 	const elapsed = (time-prevTime_)/1000;
 	update(elapsed);
-	requestAnimationFrame(() => PelicanUpdate(time));
+	PelicanReqAnimateID = requestAnimationFrame(() => PelicanUpdate(time));
 }
+
+function noUpdate() {	cancelAnimationFrame(PelicanReqAnimateID); }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
