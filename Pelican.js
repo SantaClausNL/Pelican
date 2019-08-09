@@ -7,7 +7,6 @@ class Pelican{
 	constructor() {
 		this.version = "v2.4.35";
 		this.c, this.ctx;
-		this.width, this.height;
 
 		this.setup();
 	}
@@ -27,16 +26,19 @@ class Pelican{
 	}
 }
 
-function init(width_, height_, parentOrCanvasElement_) {
-	if(parentOrCanvasElement_ !== undefined && parentOrCanvasElement_.tagName === "CANVAS") {
-		Pelican.c = parentOrCanvasElement_, Pelican.ctx = c.getContext("2d");
+function init(width_, height_, options) {
+	if(options[parent] !== undefined) {
+		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
+		options[parent].appendChild(Pelican.c);
+	} else if(options[canvas] !== undefined) {
+		Pelican.c = options[canvas], Pelican.ctx = c.getContext("2d");
 	} else {
-		c = document.createElement("CANVAS"), ctx = c.getContext("2d");
-		c.parent = parentOrCanvasElement_ || document.documentElement;
-		c.parent.appendChild(c);
+		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
+		document.documentElement.appendChild(Pelican.c);
 	}
-	width = c.width = width_, height = c.height = height_;
-	c.id = "PelicanCanvas";
+
+	width = Pelican.c.width = width_, height = Pelican.c.height = height_;
+	Pelican.c.id = "PelicanCanvas";
 	
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
