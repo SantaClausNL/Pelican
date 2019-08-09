@@ -3,12 +3,12 @@
 const PelicanVersion = "v2.4.35";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
-let PelicanReqAnimateID;
+let PelicanReqAnimateID, noUpdate = false;
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
 	if(typeof setup === 'function') setup();
-	if(typeof update === 'function') PelicanUpdate(window.performance.now());
+	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(window.performance.now());
 }
 
 function init(width_, height_, options) {
@@ -37,7 +37,7 @@ function PelicanUpdate(prevTime_) {
 	PelicanReqAnimateID = requestAnimationFrame(() => PelicanUpdate(time));
 }
 
-function noUpdate() {	cancelAnimationFrame(PelicanReqAnimateID); }
+function stopUpdate() {	cancelAnimationFrame(PelicanReqAnimateID); }
 
 function defined(variable) { return variable !== undefined; }
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
