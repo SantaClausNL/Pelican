@@ -2,14 +2,16 @@
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
 const PelicanVersion = "v2.4.35";
 window.addEventListener("load", () => PelicanSetup());
-let c, ctx, width, height, noUpdate = false, /*addOns = [],*/usePixiJS = false, mouse = {x: 0, y: 0}, mouseDown = false;
+let c, ctx, width, height, noUpdate = false, addOns = [], mouse = {x: 0, y: 0}, mouseDown = false;
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
-	if(usePixiJS === true) {
-		const PixiModule = document.createElement("SCRIPT");
-		PixiModule.src = "https://www.santaclausnl.ga/projects/Pelican/PixiJS/Pelican-Pixi.js";
-		document.head.appendChild(PixiModule);
+	if(addOns.length !== 0) {
+		for(const addOn of addOns) {
+			const script = document.createElement("SCRIPT");
+			script.src = addOn;
+			document.head.appendChild(script);
+		}
 	} else continuePelicanSetup();
 }
 
@@ -19,7 +21,6 @@ function continuePelicanSetup() {
 }
 
 function init(width_, height_, parentOrCanvasElement_) {
-	if(usePixiJS === true) { initPixiJS(width_, height_, parentOrCanvasElement_); return; }
 	if(parentOrCanvasElement_ != undefined && parentOrCanvasElement_.tagName == "CANVAS") {
 		c = parentOrCanvasElement_, ctx = c.getContext("2d");
 	} else {
@@ -41,13 +42,8 @@ function setupPelicanEvents() {
 }
 
 function PelicanResize(width_, height_) {
-	if(usePixiJS) {
-		width = Pelican.width = Pelican.renderer.view.width = width_;
-		height = Pelican.height = Pelican.renderer.view.height = height_;
-	} else {
-		width = c.width = width_;
-		height = c.height = height_;
-	}
+	width = c.width = width_;
+	height = c.height = height_;
 }
 
 function PelicanUpdate(prevTime_) {
