@@ -220,15 +220,6 @@ function collision(vec1, w1, h1, vec2, w2, h2) { return (Math.abs((vec1.x+w1/2) 
 function collide(pos, vel, w, h, objPos, objW, objH) {
 	const newPos = vec(pos.x + vel.x, pos.y + vel.y);
 	if(collision(newPos, w, h, objPos, objW, objH)) {
-		if(pos.x+w > objPos.x && pos.x < objPos.x+objW && pos.y+h > objPos.y && pos.y < objPos.y+objH) {
-			const distTop = pos.y+h-objPos.y, distBottom = objPos.y+objH-pos.y;
-			const distLeft = pos.x+w-objPos.x, distRight = objPos.x+objW-pos.x;
-			if(Math.min(distTop, distBottom) < Math.min(distLeft, distRight)) {
-				if(distTop < distBottom) pos.y -= distTop; else pos.y += distBottom;
-			} else {
-				if(distLeft < distRight) pos.x -= distLeft; else pos.x += distRight;
-			}
-		}
 		if(pos.y+h > objPos.y && pos.y < objPos.y+objH) {
 			if(vel.x < 0) {
 				vel.x = 0;
