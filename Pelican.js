@@ -1,8 +1,13 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.4.35";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = false;
+
+class Pelican{
+	constructor() {
+		this.version = "v2.4.35";
+	}
+}
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
@@ -11,11 +16,11 @@ function PelicanSetup() {
 }
 
 function init(width_, height_, parentOrCanvasElement_) {
-	if(parentOrCanvasElement_ != undefined && parentOrCanvasElement_.tagName == "CANVAS") {
+	if(parentOrCanvasElement_ !== undefined && parentOrCanvasElement_.tagName === "CANVAS") {
 		c = parentOrCanvasElement_, ctx = c.getContext("2d");
 	} else {
 		c = document.createElement("CANVAS"), ctx = c.getContext("2d");
-		c.parent = parentOrCanvasElement_ || document.body;
+		c.parent = parentOrCanvasElement_ || document.documentElement;
 		c.parent.appendChild(c);
 	}
 	width = c.width = width_, height = c.height = height_;
