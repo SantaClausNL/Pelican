@@ -1,7 +1,7 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
 window.addEventListener("load", () => Pelican = new Pelican());
-let noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = false;
+let mouse = {x: 0, y: 0}, mouseDown = false;
 
 class Pelican{
 	constructor() {
@@ -21,16 +21,15 @@ class Pelican{
 	}
 
 	update(prevTime_) {
-		const elapsed = (new Date().getTime()-prevTime_)/1000;
-		const curTime = new Date().getTime();
+		const time = new Date().getTime(), elapsed = (time-prevTime_)/1000;
 		update(elapsed);
-		requestAnimationFrame(() => this.update(curTime));
+		requestAnimationFrame(() => this.update(time));
 	}
 }
 
 function init(width_, height_, parentOrCanvasElement_) {
 	if(parentOrCanvasElement_ !== undefined && parentOrCanvasElement_.tagName === "CANVAS") {
-		c = parentOrCanvasElement_, ctx = c.getContext("2d");
+		Pelican.c = parentOrCanvasElement_, Pelican.ctx = c.getContext("2d");
 	} else {
 		c = document.createElement("CANVAS"), ctx = c.getContext("2d");
 		c.parent = parentOrCanvasElement_ || document.documentElement;
