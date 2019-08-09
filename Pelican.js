@@ -22,7 +22,8 @@ class Pelican{
 }
 
 function init(width_, height_, options) {
-	if(options[canvas] !== undefined) {
+	console.log(Object.keys(options));
+	if(Object.keys(options)[canvas] !== undefined) {
 		Pelican.c = options[canvas], Pelican.ctx = c.getContext("2d");
 	} else {
 		Pelican.c = document.createElement("CANVAS"), Pelican.ctx = Pelican.c.getContext("2d");
