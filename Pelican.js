@@ -1,7 +1,7 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
+let Pelican, mouse = {x: 0, y: 0}, mouseDown = false;
 window.addEventListener("load", () => Pelican = new PelicanClass());
-let mouse = {x: 0, y: 0}, mouseDown = false;
 
 class PelicanClass{
 	constructor() {
