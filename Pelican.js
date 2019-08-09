@@ -2,20 +2,10 @@
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
 const PelicanVersion = "v2.4.35";
 window.addEventListener("load", () => PelicanSetup());
-let c, ctx, width, height, noUpdate = false, addOns = [], mouse = {x: 0, y: 0}, mouseDown = false;
+let c, ctx, width, height, noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = false;
 
 function PelicanSetup() {
 	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
-	if(addOns.length !== 0) {
-		for(const addOn of addOns) {
-			const script = document.createElement("SCRIPT");
-			script.src = addOn;
-			document.head.appendChild(script);
-		}
-	} else continuePelicanSetup();
-}
-
-function continuePelicanSetup() {
 	if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
 	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(new Date().getTime());
 }
@@ -30,10 +20,7 @@ function init(width_, height_, parentOrCanvasElement_) {
 	}
 	width = c.width = width_, height = c.height = height_;
 	c.id = "PelicanCanvas";
-	setupPelicanEvents();
-}
-
-function setupPelicanEvents() {
+	
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
 	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
@@ -41,10 +28,7 @@ function setupPelicanEvents() {
 	window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
 }
 
-function PelicanResize(width_, height_) {
-	width = c.width = width_;
-	height = c.height = height_;
-}
+function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
 
 function PelicanUpdate(prevTime_) {
 	const elapsed = (new Date().getTime()-prevTime_)/1000;
