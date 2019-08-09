@@ -1,27 +1,15 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-class PelicanClass{
-	constructor() {
-		this.version = "v2.4.35";
-		this.c, this.ctx;
-	}
+const PelicanVersion = "v2.4.35";
+window.addEventListener("load", () => PelicanSetup());
+let c, ctx, width, height, noUpdate = false, mouse = {x: 0, y: 0}, mouseDown = false;
 
-	setup() {
-		console.log(`Pelican ${this.version} by SantaClausNL. https://www.santaclausnl.ga/`);
-		if(typeof setup === 'function') setup();
-	}
-
-	resize(width_, height_) { width = c.width = width_, height = c.height = height_; }
-
-	update(prevTime_) {
-		const time = new Date().getTime(), elapsed = (time-prevTime_)/1000;
-		update(elapsed);
-		requestAnimationFrame(() => this.update(time));
-	}
+function PelicanSetup() {
+	console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
+	if(typeof setup === 'function') setup(); else console.warn("Pelican could not find setup function");
+	if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(new Date().getTime());
+//	if(typeof update === 'function' && !(options !== undefined && options["noUpdate"] === true)) Pelican.update(new Date().getTime());
 }
-
-let Pelican = new PelicanClass(), mouse = {x: 0, y: 0}, mouseDown = false;
-window.addEventListener("load", () => Pelican.setup());
 
 function init(width_, height_, options_) {
 	const options = Object.keys(options_);
@@ -33,78 +21,89 @@ function init(width_, height_, options_) {
 	}
 	width = Pelican.c.width = width_, height = Pelican.c.height = height_;
 	Pelican.c.id = "PelicanCanvas";
+		
+	width = c.width = width_, height = c.height = height_;
+	c.id = "PelicanCanvas";
 	
-	if(typeof update === 'function' && !(options !== undefined && options["noUpdate"] === true)) Pelican.update(new Date().getTime());
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
-	Pelican.c.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
-	Pelican.c.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
-	Pelican.c.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
+	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
+	window.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
+	window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
+}
+
+function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
+
+function PelicanUpdate(prevTime_) {
+	const elapsed = (new Date().getTime()-prevTime_)/1000;
+	const curTime = new Date().getTime();
+	update(elapsed);
+	requestAnimationFrame(() => PelicanUpdate(curTime));
 }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
 function clear(color) {
 	if(color !== undefined) {
-		Pelican.ctx.fillStyle = color;
-		Pelican.ctx.fillRect(0, 0, width, height);
-	} else Pelican.ctx.clearRect(0, 0, width, height);
+		ctx.fillStyle = color;
+		ctx.fillRect(0, 0, width, height);
+	} else ctx.clearRect(0, 0, width, height);
 }
 // fuction for drawing a filled/stroked rectangle
 function rect(x, y, w, h, color, strokeWidth) {
 	if(strokeWidth === undefined) {
-		Pelican.ctx.fillStyle = color;
-		Pelican.ctx.fillRect(x, y, w, h);
+		ctx.fillStyle = color;
+		ctx.fillRect(x, y, w, h);
 	} else {
-		Pelican.ctx.strokeStyle = color;
-		Pelican.ctx.lineWidth = strokeWidth;
-		Pelican.ctx.strokeRect(x, y, w, h);
+		ctx.strokeStyle = color;
+		ctx.lineWidth = strokeWidth;
+		ctx.strokeRect(x, y, w, h);
 	}
 }
 // fuction for drawing a filled/stroked rectangle with curved corners
 function roundedRect(x, y, w, h, r1, r2, r3, r4, color, strokeWidth) {
-	Pelican.ctx.beginPath();
-	Pelican.ctx.moveTo(x + r1, y);
-	Pelican.ctx.lineTo(x + w - r2, y);
-	Pelican.ctx.quadraticCurveTo(x + w, y, x + w, y + r2);
-	Pelican.ctx.lineTo(x + w, y + h - r3);
-	Pelican.ctx.quadraticCurveTo(x + w, y + h, x + w - r3, y + h);
-	Pelican.ctx.lineTo(x + r4, y + h);
-	Pelican.ctx.quadraticCurveTo(x, y + h, x, y + h - r4);
-	Pelican.ctx.lineTo(x, y + r1);
-	Pelican.ctx.quadraticCurveTo(x, y, x + r1, y);
-	Pelican.ctx.closePath();
+	ctx.beginPath();
+	ctx.moveTo(x + r1, y);
+	ctx.lineTo(x + w - r2, y);
+	ctx.quadraticCurveTo(x + w, y, x + w, y + r2);
+	ctx.lineTo(x + w, y + h - r3);
+	ctx.quadraticCurveTo(x + w, y + h, x + w - r3, y + h);
+	ctx.lineTo(x + r4, y + h);
+	ctx.quadraticCurveTo(x, y + h, x, y + h - r4);
+	ctx.lineTo(x, y + r1);
+	ctx.quadraticCurveTo(x, y, x + r1, y);
+	ctx.closePath();
 	if(strokeWidth === undefined) {
-		Pelican.ctx.fillStyle = color;
-		Pelican.ctx.fill();
+		ctx.fillStyle = color;
+		ctx.fill();
 	} else {
-		Pelican.ctx.strokeStyle = color;
-		Pelican.ctx.lineWidth = strokeWidth;
-		Pelican.ctx.stroke();
+		ctx.strokeStyle = color;
+		ctx.lineWidth = strokeWidth;
+		ctx.stroke();
 	}
 }
 // function for drawing a line between two points
 function line(x1, y1, x2, y2, width, color) {
-	Pelican.ctx.strokeStyle = color;
-	Pelican.ctx.lineWidth = width;
-	Pelican.ctx.beginPath();
-	Pelican.ctx.moveTo(x1, y1);
-	Pelican.ctx.lineTo(x2, y2);
-	Pelican.ctx.closePath();
-	Pelican.ctx.stroke();
+	ctx.strokeStyle = color;
+	ctx.lineWidth = width;
+	ctx.beginPath();
+	ctx.moveTo(x1, y1);
+	ctx.lineTo(x2, y2);
+	ctx.closePath();
+	ctx.stroke();
 }
 // function for drawing a circle
 function circle(centerX, centerY, radius, color, strokeWidth) {
-	Pelican.ctx.beginPath();
-	Pelican.ctx.arc(centerX, centerY, radius, 0, Math.PI*2, true);
-	Pelican.ctx.closePath();
+	ctx.beginPath();
+	ctx.arc(centerX, centerY, radius, 0, Math.PI*2, true);
+	ctx.closePath();
 	if(strokeWidth === undefined) {
-		Pelican.ctx.fillStyle = color;
-		Pelican.ctx.fill();
+		ctx.fillStyle = color;
+		ctx.fill();
 	} else {
-		Pelican.ctx.strokeStyle = color;
-		Pelican.ctx.lineWidth = strokeWidth;
-		Pelican.ctx.stroke();
+		ctx.strokeStyle = color;
+		ctx.lineWidth = strokeWidth;
+		ctx.stroke();
 	}
 }
 // function for drawing text
@@ -115,21 +114,21 @@ function circle(centerX, centerY, radius, color, strokeWidth) {
 //   src: url(assets/<font file>.ttf) format("truetype");
 // }
 function text(x, y, string, color, align, size, font) {
-	Pelican.ctx.fillStyle = color;
-	if(align !== undefined) Pelican.ctx.textAlign = align; // "start|left|end|right|center"
-	if(font !== undefined) Pelican.ctx.font = String(size) + "px " + font; else if(size !== undefined) Pelican.ctx.font = String(size) + "px Sans-Serif";
-	Pelican.ctx.fillText(string, x, y);
-	if(align !== undefined) Pelican.ctx.textAlign = "start";
-	if(size !== undefined) Pelican.ctx.font = "10px Sans-Serif";
+	ctx.fillStyle = color;
+	if(align !== undefined) ctx.textAlign = align; // "start|left|end|right|center"
+	if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size !== undefined) ctx.font = String(size) + "px Sans-Serif";
+	ctx.fillText(string, x, y);
+	if(align !== undefined) ctx.textAlign = "start";
+	if(size !== undefined) ctx.font = "10px Sans-Serif";
 }
 // function for drawing a centered image with rotation and ability to flip
 function img(image, x, y, angle, flip) {
-	Pelican.ctx.save();
-	Pelican.ctx.translate(x, y);
-	if(flip !== undefined) Pelican.ctx.scale(-1, 1);
-	Pelican.ctx.rotate(angle);
-	Pelican.ctx.drawImage(image, -image.width/2, -image.height/2);
-	Pelican.ctx.restore();
+	ctx.save();
+	ctx.translate(x, y);
+	if(flip !== undefined) ctx.scale(-1, 1);
+	ctx.rotate(angle);
+	ctx.drawImage(image, -image.width/2, -image.height/2);
+	ctx.restore();
 }
 // function for an animation from a sprite sheet
 // <name of sprite> = Sprite({
@@ -146,10 +145,10 @@ function Sprite(opt) {
 	sprite.draw = function(x, y, flip, noTick) {
 		let width = opt.width || opt.spriteSheet.width, height = opt.height || opt.spriteSheet.height, sheetStart = opt.sheetStart || 0;
 		if((noTick ? tick : ++tick) > opt.frameTime) { tick = 0; if(frame < opt.frames - 1) frame += 1; else frame = 0; }
-		Pelican.ctx.save();
-		if(!flip) Pelican.ctx.translate(x+(width/opt.frames)/2, y); else { Pelican.ctx.translate(x-(width/opt.frames)/2, y); Pelican.ctx.scale(-1, 1); }
-		Pelican.ctx.drawImage(opt.spriteSheet, frame * width / opt.frames, sheetStart, width / opt.frames, height, -width/opt.frames, -height/2, width / opt.frames, height);
-		Pelican.ctx.restore();
+		ctx.save();
+		if(!flip) ctx.translate(x+(width/opt.frames)/2, y); else { ctx.translate(x-(width/opt.frames)/2, y); ctx.scale(-1, 1); }
+		ctx.drawImage(opt.spriteSheet, frame * width / opt.frames, sheetStart, width / opt.frames, height, -width/opt.frames, -height/2, width / opt.frames, height);
+		ctx.restore();
 	}
 	return sprite;
 }
