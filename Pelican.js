@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.4.35";
+const PelicanVersion = "v2.5.0";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false;
@@ -119,6 +119,8 @@ function text(x, y, string, color, align, size, font) {
   if(align !== undefined) ctx.textAlign = "start";
   if(size !== undefined) ctx.font = "10px Sans-Serif";
 }
+
+//-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for drawing a centered image with rotation and ability to flip
 function img(image, x, y, angle, flip) {
   ctx.save();
@@ -150,8 +152,6 @@ function Sprite(opt) {
   }
   return sprite;
 }
-
-//-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for loading images
 // use a counting function, e.g.: function count() { if(--toLoad <= 0) setup(); } as func_
 // and a toLoad variable for the amount of images to be loaded
