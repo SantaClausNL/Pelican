@@ -12,10 +12,11 @@ function PelicanSetup() {
 }
 
 function init(width_, height_, options) {
+  if(defined(options) && options["transparancy"] !== true) options["transparancy"] = false;
   if(defined(options) && options["canvas"] !== undefined) {
-    c = options["canvas"], ctx = c.getContext('2d', { alpha: false });
+    c = options["canvas"], ctx = c.getContext('2d', { alpha: options["transparancy"] })
   } else {
-    c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: false });
+    c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: options["transparancy"] });
     if(defined(options) && options["parent"] !== undefined) options["parent"].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
