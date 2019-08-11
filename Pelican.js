@@ -15,9 +15,9 @@ function init(width_, height_, options) {
   if(!defined(options)) options = {};
   if(options["transparancy"] !== true) options["transparancy"] = false;
   if(options["canvas"] !== undefined) {
-    c = options["canvas"], ctx = c.getContext('2d', { alpha: options["transparancy"], imageSmoothingEnabled: false });
+    c = options["canvas"], ctx = c.getContext('2d', { alpha: options["transparancy"] });
   } else {
-    c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: options["transparancy"], imageSmoothingEnabled: false });
+    c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: options["transparancy"] });
     if(options["parent"] !== undefined) options["parent"].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
