@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.5.6";
+const PelicanVersion = "v2.5.7";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false;
@@ -114,20 +114,13 @@ function circle(centerX, centerY, radius, color, strokeWidth) {
 function text(x, y, string, color, align, size, font) {
   ctx.fillStyle = color;
   ctx.textAlign = align || 'start'; // "start|left|end|right|center"
-  ctx.font = String(size) + "px " + (font || "Sans-Serif") || "10px Sans-Serif";
+  ctx.font = String(size || 10) + "px " + (font || "Sans-Serif");
   ctx.fillText(string, x, y);
-
-
-
-  // if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size !== undefined) ctx.font = String(size) + "px Sans-Serif";
-  // if(size !== undefined) ctx.font = "10px Sans-Serif";
 }
 // function for measuring the width of a string drawn on canvas
 function textWidth(string, size, font) {
-  if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size !== undefined) ctx.font = String(size) + "px Sans-Serif";
-  const width = ctx.measureText(string).width;
-  if(size !== undefined) ctx.font = "10px Sans-Serif";
-  return width;
+  ctx.font = String(size || 10) + "px " + (font || "Sans-Serif");
+  return ctx.measureText(string).width;
 }
 
 //-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
