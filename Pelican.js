@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.5.2";
+const PelicanVersion = "v2.5.4";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false;
@@ -16,7 +16,7 @@ function init(width_, height_, options) {
     c = options["canvas"], ctx = c.getContext('2d', { alpha: false });
   } else {
     c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: false });
-    if(defined(options) && options["parent"] !== undefined) options["parent"].appendChild(c); else document.documentElement.appendChild(c);
+    if(defined(options) && options["parent"] !== undefined) options["parent"].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
   c.id = "PelicanCanvas";
