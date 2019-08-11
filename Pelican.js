@@ -13,9 +13,9 @@ function PelicanSetup() {
 
 function init(width_, height_, options) {
   if(defined(options) && options["canvas"] !== undefined) {
-    c = options["canvas"], ctx = c.getContext("2d");
+    c = options["canvas"], ctx = c.getContext('2d', { alpha: false });
   } else {
-    c = document.createElement("CANVAS"), ctx = c.getContext("2d");
+    c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: false });
     if(defined(options) && options["parent"] !== undefined) options["parent"].appendChild(c); else document.documentElement.appendChild(c);
   }
   width = c.width = width_, height = c.height = height_;
