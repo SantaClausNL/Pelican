@@ -122,6 +122,17 @@ function text(x, y, string, color, align, size, font) {
   return width;
 }
 
+function textWidth(string, size, font) {
+  ctx.fillStyle = color;
+  if(align !== undefined) ctx.textAlign = align; // "start|left|end|right|center"
+  if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size !== undefined) ctx.font = String(size) + "px Sans-Serif";
+  ctx.fillText(string, x, y);
+  const width = ctx.measureText(string).width;
+  if(align !== undefined) ctx.textAlign = "start";
+  if(size !== undefined) ctx.font = "10px Sans-Serif";
+  return width;
+}
+
 //-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for drawing a centered image with rotation and ability to flip
 function img(image, x, y, angle, flip) {
