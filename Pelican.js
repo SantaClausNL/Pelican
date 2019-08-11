@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.5.0";
+const PelicanVersion = "v2.5.2";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false;
@@ -116,8 +116,10 @@ function text(x, y, string, color, align, size, font) {
   if(align !== undefined) ctx.textAlign = align; // "start|left|end|right|center"
   if(font !== undefined) ctx.font = String(size) + "px " + font; else if(size !== undefined) ctx.font = String(size) + "px Sans-Serif";
   ctx.fillText(string, x, y);
+  const width = ctx.measureText(string).width;
   if(align !== undefined) ctx.textAlign = "start";
   if(size !== undefined) ctx.font = "10px Sans-Serif";
+  return width;
 }
 
 //-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
