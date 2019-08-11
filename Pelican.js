@@ -18,7 +18,7 @@ function init(width_, height_, options) {
     c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: false });
     if(defined(options) && options["parent"] !== undefined) options["parent"].appendChild(c); else document.documentElement.appendChild(c);
   }
-  width = c.width = width_, height = c.height = height_;
+  width = c.width = width_ || 100, height = c.height = height_ || 100;
   c.id = "PelicanCanvas";
   
   if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
