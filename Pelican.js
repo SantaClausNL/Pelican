@@ -196,6 +196,11 @@ function dist(x1, y1, x2, y2) {
     return Math.sqrt((y1.x-x1.x)*(y1.x-x1.x) + (y1.y-x1.y)*(y1.y-x1.y));
   }
 }
+//function that returns true for the intersection of a rectangle and circle
+function rectCircleCollision(x, y, w, h, cx, cy, cr) {
+  let dx = cx-Math.max(x, Math.min(cx, x+w)), dy = cy-Math.max(y, Math.min(cy, y+h));
+  return (dx*dx + dy*dy) < cr*cr;
+}
 // function for detecting collision between rectangles
 function collision(vec1, w1, h1, vec2, w2, h2) { return (Math.abs((vec1.x+w1/2) - (vec2.x+w2/2)) * 2 < (w1 + w2)) && (Math.abs((vec1.y+h1/2) - (vec2.y+h2/2)) * 2 < (h1 + h2)); }
 // function for collision between a dynamic and static rectangle
@@ -240,11 +245,6 @@ Array.prototype.shuffle = function() {
 }
 // lerp function
 function lerp(start, end, amt) { return start+amt*(end-start); }
-//function that returns true for the intersection of a rectangle and circle
-function rectCircleCollision(x, y, w, h, cx, cy, cr) {
-  let dx = cx-Math.max(x, Math.min(cx, x+w)), dy = cy-Math.max(y, Math.min(cy, y+h));
-  return (dx*dx + dy*dy) < cr*cr;
-}
 // get the mouse position in the form of a vector
 function getMousePos(e) {
   const rect = c.getBoundingClientRect(), root = document.documentElement;
