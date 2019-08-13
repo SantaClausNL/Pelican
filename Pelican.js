@@ -7,9 +7,15 @@ let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0;
 
 function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
-  if(typeof preLoad === 'function') preLoad();
-  if(typeof setup === 'function') setup();
-  if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(window.performance.now());
+  if(typeof preLoad === 'function') {
+    preLoad();
+    setInterval(() => { if(PelicanLoading <= 0) continuePelicanSetup(); }, 10);
+  } else continuePelicanSetup();
+
+  function Continue() {
+    if(typeof setup === 'function') setup();
+    if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(window.performance.now());
+  }
 }
 
 function init(width_, height_, options) {
@@ -158,12 +164,10 @@ function Sprite(opt) {
   }
   return sprite;
 }
-// function for loading images
-// use a counting function, e.g.: function count() { if(--toLoad <= 0) setup(); } as func_
-// and a toLoad variable for the amount of images to be loaded
+// function for loading images, call in preload
 function loadImage(src_) {
   PelicanLoading++;
-  let img = new Image();
+  const img = new Image();
   img.onload = () => PelicanLoading--;
   img.src = src_;
   return img;
