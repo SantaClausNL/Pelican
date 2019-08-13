@@ -1,6 +1,7 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
 const PelicanVersion = "v2.6.0";
+if(typeof preLoad === 'function') preLoad();
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false;
