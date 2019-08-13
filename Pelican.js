@@ -1,13 +1,13 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
 const PelicanVersion = "v2.6.0";
-if(typeof preLoad === 'function') preLoad();
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
-let PelicanReqAnimateID, noUpdate = false;
+let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0;
 
 function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
+  if(typeof preLoad === 'function') preLoad();
   if(typeof setup === 'function') setup();
   if(typeof update === 'function' && noUpdate !== true) PelicanUpdate(window.performance.now());
 }
@@ -161,9 +161,10 @@ function Sprite(opt) {
 // function for loading images
 // use a counting function, e.g.: function count() { if(--toLoad <= 0) setup(); } as func_
 // and a toLoad variable for the amount of images to be loaded
-function loadImage(src_, func_) {
+function loadImage(src_) {
+  PelicanLoading++;
   let img = new Image();
-  img.onload = () => func_;
+  img.onload = () => PelicanLoading--;
   img.src = src_;
   return img;
 }

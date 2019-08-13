@@ -8,15 +8,15 @@
   <body>
     <script>
       function preLoad() {
-
+        console.log("preload at "+window.performance.now());
       }
-      
-      function setup() {
 
+      function setup() {
+        console.log("setup at "+window.performance.now());
       }
 
       function update() {
-        
+        //console.log(window.performance.now());
       }
     </script>
   </body>
