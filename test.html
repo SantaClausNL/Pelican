@@ -7,16 +7,20 @@
   </head>
   <body>
     <script>
+      let pelican;
+
       function preLoad() {
         console.log("preload at "+window.performance.now());
+        pelican = loadImage("Logo/Logo.png");
       }
 
       function setup() {
         console.log("setup at "+window.performance.now());
+        init(500, 500);
       }
 
       function update() {
-        //console.log(window.performance.now());
+        img(pelican, width/2, height/2);
       }
     </script>
   </body>
