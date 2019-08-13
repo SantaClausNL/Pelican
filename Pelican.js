@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.7.0";
+const PelicanVersion = "v2.7.1";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0;
@@ -96,12 +96,12 @@ function roundedRect(x, y, w, h, r1, r2, r3, r4, color, strokeWidth) {
 }
 // function for drawing a line between two points
 function line(x1, y1, x2, y2, width, color) {
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width;
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
   ctx.closePath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
   ctx.stroke();
 }
 // function for drawing a circle
