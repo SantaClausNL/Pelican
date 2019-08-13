@@ -9,12 +9,10 @@ function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
   if(typeof preLoad === 'function') {
     preLoad();
-    if(PelicanLoading <= 0) Continue(); else {
-      const loadingLoop = setInterval(() => { if(PelicanLoading <= 0) {
-        clearInterval(loadingLoop);
-        Continue();
-      }}, 10);
-    }
+    const loadingLoop = setInterval(() => { if(PelicanLoading <= 0) {
+      clearInterval(loadingLoop);
+      Continue();
+    }}, 10);
   } else Continue();
 
   function Continue() {
