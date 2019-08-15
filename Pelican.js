@@ -34,7 +34,7 @@ function init(width_, height_, options) {
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
   c.id = "PelicanCanvas";
-  
+
   if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
   if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
   window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
