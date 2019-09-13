@@ -288,14 +288,14 @@ function fromAngle(angle, radius) { return vec(Math.cos(angle) * (radius || 1), 
 function radians(degrees) { return degrees*Math.PI/180; }
 // convert radians angle to degrees
 function degrees(radians) { return radians*180/Math.PI; }
-// Perlin Noise class, create 1 instance and get values via noise.next(x); function
+// Perlin Noise class, create 1 instance and get values via noise.value(x); function
 class Noise{
   constructor(amp_, scl_) {
     this.vertices = 256, this.amp = amp_ || 1, this.scl = scl_ || 0.05, this.r = [];
     for(let i = 0; i < this.vertices; i++) this.r.push(Math.random());
   }
 
-  next(x) {
+  value(x) {
     const sclX = x*this.scl, floorX = Math.floor(sclX), t = sclX-floorX;
     const xMin = floorX & this.vertices-1, xMax = (xMin + 1) & this.vertices-1;
     return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
