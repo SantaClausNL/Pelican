@@ -10,10 +10,11 @@ function PelicanSetup() {
   if(typeof preload === 'function') {
     preload();
     if(PelicanLoading <= 0) Continue(); else {
-      const loadingLoop = setInterval(() => { if(PelicanLoading <= 0) {
+      let elapsedLoading = 0;
+      const loadingLoop = setInterval(() => { if(PelicanLoading <= 0 || elapsedLoading >= loadTimeout) {
         clearInterval(loadingLoop);
         Continue();
-      }}, 10);
+      } else elapsedLoading += 10; }, 10);
     }
   } else Continue();
 
