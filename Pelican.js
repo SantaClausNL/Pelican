@@ -8,9 +8,9 @@ let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeou
 function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
   if(typeof preload === 'function') {
-    const loading = document.createTextNode("LOADING");
-    document.body.appendChild(loading);
     preload();
+    const loading = document.createTextNode("LOADING...");
+    document.body.appendChild(loading);
     if(PelicanLoading <= 0) Continue(); else {
       let elapsedLoading = 0;
       const loadingLoop = setInterval(() => { if(PelicanLoading <= 0 || elapsedLoading >= PelicanLoadTimeout) {
