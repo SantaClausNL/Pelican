@@ -1,9 +1,9 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.7.3";
+const PelicanVersion = "v2.8.0";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
-let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0;
+let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeout = 5000;
 
 function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
@@ -11,10 +11,10 @@ function PelicanSetup() {
     preload();
     if(PelicanLoading <= 0) Continue(); else {
       let elapsedLoading = 0;
-      const loadingLoop = setInterval(() => { if(PelicanLoading <= 0 || elapsedLoading >= loadTimeout) {
+      const loadingLoop = setInterval(() => { if(PelicanLoading <= 0 || elapsedLoading >= PelicanLoadTimeout) {
         clearInterval(loadingLoop);
         Continue();
-      } else elapsedLoading += 10; }, 10);
+      } else elapsedLoading += 25; }, 25);
     }
   } else Continue();
 
@@ -146,7 +146,7 @@ function img(image, x, y, angle, flip) {
   ctx.translate(x, y);
   if(flip !== undefined) ctx.scale(-1, 1);
   ctx.rotate(angle);
-  ctx.drawImage(image, -image.width/2, -image.height/2);
+  try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { //console.warn(err)}
   ctx.restore();
 }
 // function for an animation from a sprite sheet
