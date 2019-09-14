@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.8.0";
+const PelicanVersion = "v2.8.1";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeout = 5000;
@@ -8,11 +8,15 @@ let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeou
 function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
   if(typeof preload === 'function') {
+    const loading = document.createTextNode("LOADING");
+    loading.id = "loading";
+    document.body.appendChild(loading);
     preload();
     if(PelicanLoading <= 0) Continue(); else {
       let elapsedLoading = 0;
       const loadingLoop = setInterval(() => { if(PelicanLoading <= 0 || elapsedLoading >= PelicanLoadTimeout) {
         clearInterval(loadingLoop);
+        delete loading;
         Continue();
       } else elapsedLoading += 25; }, 25);
     }
@@ -146,7 +150,7 @@ function img(image, x, y, angle, flip) {
   ctx.translate(x, y);
   if(flip !== undefined) ctx.scale(-1, 1);
   ctx.rotate(angle);
-  try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line(0, 0, 25, 25, 2, 'red'); line(25, 0, 0, 25, 2, 'red'); }
+  try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line(-10, -10, 10, 10, 2, 'red'); line(10, -10, -10, 10, 2, 'red'); }
   ctx.restore();
 }
 // function for an animation from a sprite sheet
