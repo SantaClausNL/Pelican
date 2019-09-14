@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.8.2";
+const PelicanVersion = "v2.8.3";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeout = 5000;
@@ -195,7 +195,7 @@ function randomInt(low, high) { return floor(random(low, high)); }
 // replacement function for Math.round()
 function round(value) { return Math.round(value); }
 // replacement function for Math.floor()
-function floor(value) { return Math.floor(value); }
+function floor(value) { return (~~value); }
 // replacement function for Math.ceil()
 function ceil(value) { return Math.ceil(value); }
 // function for constraining a value
