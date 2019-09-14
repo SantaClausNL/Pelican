@@ -195,7 +195,7 @@ function randomInt(low, high) { return floor(random(low, high)); }
 // replacement function for Math.round()
 function round(value) { return Math.round(value); }
 // replacement function for Math.floor()
-function floor(value) { return (~~value); }
+function floor(value) { return Math.floor(value); }
 // replacement function for Math.ceil()
 function ceil(value) { return Math.ceil(value); }
 // function for constraining a value
