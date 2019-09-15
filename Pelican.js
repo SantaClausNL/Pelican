@@ -47,12 +47,13 @@ function init(width_, height_, options) {
 
 function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
 
-function PelicanUpdate(prevTime_) {
+function PelicanUpdate(prevTime_, timestamp) {
+  console.log(timestamp);
   const time = window.performance.now();
   const elapsed = (time-prevTime_)/1000;
   ctx.imageSmoothingEnabled = false;
   update(elapsed);
-  PelicanReqAnimateID = requestAnimationFrame(() => PelicanUpdate(time));
+  PelicanReqAnimateID = requestAnimationFrame(PelicanUpdate(timestamp));
 }
 
 function stopUpdate() {	cancelAnimationFrame(PelicanReqAnimateID); }
