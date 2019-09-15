@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.8.3";
+const PelicanVersion = "v2.8.4";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeout = 5000;
@@ -29,11 +29,10 @@ function PelicanSetup() {
 
 function init(width_, height_, options) {
   if(!defined(options)) options = {};
-  if(options["transparancy"] !== true) options["transparancy"] = false;
   if(options["canvas"] !== undefined) {
-    c = options["canvas"], ctx = c.getContext('2d', { alpha: options["transparancy"] });
+    c = options["canvas"], ctx = c.getContext('2d');
   } else {
-    c = document.createElement("CANVAS"), ctx = c.getContext('2d', { alpha: options["transparancy"] });
+    c = document.createElement("CANVAS"), ctx = c.getContext('2d');
     if(options["parent"] !== undefined) options["parent"].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
