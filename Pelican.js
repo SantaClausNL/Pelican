@@ -52,7 +52,7 @@ function PelicanUpdate(prevTime_) {
   const elapsed = (time-prevTime_)/1000;
   ctx.imageSmoothingEnabled = false;
   update(elapsed);
-  PelicanReqAnimateID = requestAnimationFrame(() => PelicanUpdate(time));
+  PelicanReqAnimateID = requestAnimationFrame(PelicanUpdate);
 }
 
 function stopUpdate() {	cancelAnimationFrame(PelicanReqAnimateID); }
