@@ -53,10 +53,8 @@ function PelicanUpdate(prevTime_) {
   const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
   ctx.imageSmoothingEnabled = Pelican.image_smoothing;
   update(elapsed);
-  if(Pelican.noUpdate === false) window.requestAnimationFrame(PelicanUpdate(time));
+  window.requestAnimationFrame(() => PelicanUpdate(time));
 }
-
-function stopUpdate() { Pelican.noUpdate = true; }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
