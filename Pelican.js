@@ -1,9 +1,9 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.0";
+const PelicanVersion = "v2.9.1";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
-let Pelican = {reqAnimateId: undefined, noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
+let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
 
 function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
@@ -53,10 +53,10 @@ function PelicanUpdate(prevTime_) {
   const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
   ctx.imageSmoothingEnabled = Pelican.image_smoothing;
   update(elapsed);
-  Pelican.reqAnimateID = window.requestAnimationFrame(() => PelicanUpdate(time));
+  if(Pelican.noUpdate === false) window.requestAnimationFrame(PelicanUpdate(time));
 }
 
-function stopUpdate() {	window.cancelAnimationFrame(Pelican.reqAnimateID); }
+function stopUpdate() { Pelican.noUpdate = true; }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
