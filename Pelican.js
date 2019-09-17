@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.8.7";
+const PelicanVersion = "v2.8.8";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeout = 5000;
@@ -289,7 +289,6 @@ function vec(x, y) { return new Vector(x, y); }
 // get vector from an angle
 function fromAngle(angle, radius) {
   if(!defined(radius)) radius = 1;
-  if(angle instanceof Vector) angle = this.radiansTo(angle);
   return vec(Math.cos(angle) * radius, Math.sin(angle) * radius);
 }
 // convert degree angle to radians
