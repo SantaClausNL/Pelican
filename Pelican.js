@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.8.6";
+const PelicanVersion = "v2.8.7";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeout = 5000;
@@ -188,7 +188,7 @@ function defined(variable) { return variable !== undefined; }
 // function for mapping a value
 function map(value, valLow, valHigh, resLow, resHigh) { return resLow + (resHigh - resLow) * (value - valLow) / (valHigh - valLow); }
 // replacement function for Math.random(), with only 1 argument it is random from 0 to argument
-function random(low, high) { if(defined(high)) return Math.random() * (high-low) + low; else return Math.random() * low; }
+function random(low, high) { if(defined(high)) return Math.random() * (high-low) + low; else if(defined(low)) return Math.random() * low; else return Math.random(); }
 // replacement function for Math.random() rounded to integers
 function randomInt(low, high) { return floor(random(low, high)); }
 // replacement function for Math.round()
