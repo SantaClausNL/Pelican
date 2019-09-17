@@ -29,11 +29,11 @@ function PelicanSetup() {
 
 function init(width_, height_, options) {
   if(!defined(options)) options = {};
-  if(options["canvas"] !== undefined) {
+  if(defined(options["canvas"])) {
     c = options["canvas"], ctx = c.getContext('2d');
   } else {
     c = document.createElement("CANVAS"), ctx = c.getContext('2d');
-    if(options["parent"] !== undefined) options["parent"].appendChild(c); else document.body.appendChild(c);
+    if(defined(options["parent"])) options["parent"].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
   c.id = "PelicanCanvas";
@@ -60,14 +60,14 @@ function stopUpdate() {	cancelAnimationFrame(PelicanReqAnimateID); }
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
 function clear(color) {
-  if(color !== undefined) {
+  if(defined(color)) {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, width, height);
   } else ctx.clearRect(0, 0, width, height);
 }
 // fuction for drawing a filled/stroked rectangle
 function rect(x, y, w, h, color, strokeWidth) {
-  if(strokeWidth === undefined) {
+  if(!defined(strokeWidth)) {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, w, h);
   } else {
@@ -89,7 +89,7 @@ function roundedRect(x, y, w, h, r1, r2, r3, r4, color, strokeWidth) {
   ctx.lineTo(x, y + r1);
   ctx.quadraticCurveTo(x, y, x + r1, y);
   ctx.closePath();
-  if(strokeWidth === undefined) {
+  if(!defined(strokeWidth)) {
     ctx.fillStyle = color;
     ctx.fill();
   } else {
@@ -113,7 +113,7 @@ function circle(centerX, centerY, radius, color, strokeWidth) {
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, Math.PI*2, true);
   ctx.closePath();
-  if(strokeWidth === undefined) {
+  if(!defined(strokeWidth)) {
     ctx.fillStyle = color;
     ctx.fill();
   } else {
@@ -146,7 +146,7 @@ function textWidth(string, size, font) {
 function img(image, x, y, angle, flip) {
   ctx.save();
   ctx.translate(x, y);
-  if(flip !== undefined) ctx.scale(-1, 1);
+  if(flip === true) ctx.scale(-1, 1);
   ctx.rotate(angle);
   try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line(-10, -10, 10, 10, 2, 'red'); line(10, -10, -10, 10, 2, 'red'); }
   ctx.restore();
@@ -188,7 +188,7 @@ function defined(variable) { return variable !== undefined; }
 // function for mapping a value
 function map(value, valLow, valHigh, resLow, resHigh) { return resLow + (resHigh - resLow) * (value - valLow) / (valHigh - valLow); }
 // replacement function for Math.random(), with only 1 argument it is random from 0 to argument
-function random(low, high) { if(high !== undefined) return Math.random() * (high-low) + low; else return Math.random() * low; }
+function random(low, high) { if(defined(high)) return Math.random() * (high-low) + low; else return Math.random() * low; }
 // replacement function for Math.random() rounded to integers
 function randomInt(low, high) { return floor(random(low, high)); }
 // replacement function for Math.round()
@@ -278,8 +278,8 @@ class Vector{
   constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
   degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
   radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
-  fromAngle(angle, radius_) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
-    const radius = defined(radius_) ? radius_ : 1;
+  fromAngle(angle, radius) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
+    if(!defined(radius)) radius = 1;
     if(angle instanceof Vector) angle = this.radiansTo(angle);
     return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
   }
@@ -287,10 +287,10 @@ class Vector{
 }
 function vec(x, y) { return new Vector(x, y); }
 // get vector from an angle
-function fromAngle(angle, radius_) {
-  const radius = defined(radius_) ? radius_ : 1;
+function fromAngle(angle, radius) {
+  if(!defined(radius)) radius = 1;
   if(angle instanceof Vector) angle = this.radiansTo(angle);
-  return vec(Math.cos(angle) * (radius || 1), Math.sin(angle) * (radius || 1));
+  return vec(Math.cos(angle) * radius, Math.sin(angle) * radius);
 }
 // convert degree angle to radians
 function radians(degrees) { return degrees*Math.PI/180; }
