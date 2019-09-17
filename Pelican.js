@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.8.8";
+const PelicanVersion = "v2.8.9";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let PelicanReqAnimateID, noUpdate = false, PelicanLoading = 0, PelicanLoadTimeout = 5000;
@@ -29,11 +29,12 @@ function PelicanSetup() {
 
 function init(width_, height_, options) {
   if(!defined(options)) options = {};
-  if(defined(options["canvas"])) {
-    c = options["canvas"], ctx = c.getContext('2d');
+  if(options[image_smoothing] !== true) options[image_smoothing] = false;
+  if(defined(options[canvas])) {
+    c = options[canvas], ctx = c.getContext('2d');
   } else {
     c = document.createElement("CANVAS"), ctx = c.getContext('2d');
-    if(defined(options["parent"])) options["parent"].appendChild(c); else document.body.appendChild(c);
+    if(defined(options[parent])) options[parent].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
   c.id = "PelicanCanvas";
@@ -48,9 +49,8 @@ function init(width_, height_, options) {
 function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
 
 function PelicanUpdate(prevTime_) {
-  const time = window.performance.now();
-  const elapsed = (time-prevTime_)/1000;
-  ctx.imageSmoothingEnabled = false;
+  const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
+  ctx.imageSmoothingEnabled = options[image_smoothing];
   update(elapsed);
   PelicanReqAnimateID = window.requestAnimationFrame(PelicanUpdate(time));
 }
