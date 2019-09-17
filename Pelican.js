@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.1";
+const PelicanVersion = "v2.9.2";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
@@ -11,7 +11,7 @@ function PelicanSetup() {
     preload();
     const loading = document.createTextNode("LOADING...");
     document.body.appendChild(loading);
-    if(PelicanLoading <= 0) Continue(); else {
+    if(Pelican.toLoad <= 0) Continue(); else {
       let elapsedLoading = 0;
       const loadingLoop = setInterval(() => { if(Pelican.toLoad <= 0 || elapsedLoading >= Pelican.LoadTimeout) {
         clearInterval(loadingLoop);
