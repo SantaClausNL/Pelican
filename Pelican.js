@@ -47,7 +47,7 @@ function init(width_, height_, options) {
   window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
 }
 
-function PelicanResize(width_, height_) { width = c.width = width_, height = c.height = height_; }
+function resizeCanvas(width_, height_) { width = c.width = width_, height = c.height = height_; }
 
 function PelicanUpdate(prevTime_) {
   const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
