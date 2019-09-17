@@ -30,6 +30,7 @@ function PelicanSetup() {
 function init(width_, height_, options) {
   if(!defined(options)) options = {};
   if(options["image_smoothing"] === true) Pelican.image_smoothing = true;
+  if(options["noUpdate"] === true) Pelican.noUpdate = true;
   if(defined(options["canvas"])) {
     c = options["canvas"], ctx = c.getContext('2d');
   } else {
@@ -52,7 +53,7 @@ function PelicanUpdate(prevTime_) {
   const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
   ctx.imageSmoothingEnabled = Pelican.image_smoothing;
   update(elapsed);
-  window.requestAnimationFrame(PelicanUpdate(time));
+  Pelican.reqAnimateID = window.requestAnimationFrame(() => PelicanUpdate(time));
 }
 
 function stopUpdate() {	window.cancelAnimationFrame(Pelican.reqAnimateID); }
