@@ -280,6 +280,7 @@ class Vector{
   radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
   fromAngle(angle, radius) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
     if(angle instanceof Vector) angle = this.radiansTo(angle);
+    const radius = defined(radius) ? radius_ : 1;
     return vec(Math.cos(angle) * (radius || 1) + this.x, Math.sin(angle) * (radius || 1) + this.y);
   }
   collides(x, y, w, h) { return (this.x < x+w && this.x > x && this.y < y+h && this.y > y); }
