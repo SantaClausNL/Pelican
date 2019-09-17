@@ -3,28 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <title>Pelican.js Test, by SantaClausNL</title>
-    <script src="https://www.santaclausnl.ga/projects/Pelican/Pelican.js"></script>
+    <!-- <script src="https://www.santaclausnl.ga/projects/Pelican/Pelican.js"></script> -->
   </head>
   <body>
     <script>
-      let pelican;
-
-      function preload() {
-        console.log("preload at "+window.performance.now());
-        pelican = loadImage("Logo/Logo.png");
+      window.onload = function() {
+        update();
       }
 
-      function setup() {
-        console.log("setup at "+window.performance.now());
-        init(500, 500);
-      }
-
-      function update() {
-        ctx.save();
-          ctx.translate(width/2, height/2);
-          ctx.scale(0.4, 0.4);
-          img(pelican, 0, 0);
-        ctx.restore();
+      function update(time) {
+        console.log(time);
+        window.requestAnimationFrame(update);
       }
     </script>
   </body>
