@@ -144,10 +144,10 @@ function textWidth(string, size, font) {
 // function for drawing a centered image with rotation and ability to flip
 function img(image, x, y, angle, flip) {
   ctx.save();
-  ctx.translate(x, y);
-  if(flip === true) ctx.scale(-1, 1);
-  ctx.rotate(angle);
-  try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line(-10, -10, 10, 10, 2, 'red'); line(10, -10, -10, 10, 2, 'red'); }
+    ctx.translate(x, y);
+    if(flip === true) ctx.scale(-1, 1);
+    ctx.rotate(angle);
+    try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line(-10, -10, 10, 10, 2, 'red'); line(10, -10, -10, 10, 2, 'red'); }
   ctx.restore();
 }
 // function for an animation from a sprite sheet
