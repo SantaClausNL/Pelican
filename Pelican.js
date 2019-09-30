@@ -1,12 +1,14 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.2";
+const PelicanVersion = "v2.9.3";
 window.addEventListener("load", () => PelicanSetup());
-let c, ctx, width, height, mouse = {x: 0, y: 0}, mouseDown = false;
+let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
 
 function PelicanSetup() {
   console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
+
+  mouse = vec();
   if(typeof preload === 'function') {
     preload();
     const loading = document.createTextNode("LOADING...");
