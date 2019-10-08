@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.5";
+const PelicanVersion = "v2.9.6";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
@@ -141,10 +141,12 @@ function strokedText(x, y, string, color, strokeWidth, strokeColor, align, size,
   ctx.fillStyle = color;
   ctx.strokeStyle = strokeColor;
   ctx.lineWidth = strokeWidth;
+  ctx.lineJoin = 'round';
   ctx.textAlign = align || 'start'; // "start|left|end|right|center"
   ctx.font = String(size || 10) + "px " + (font || "Sans-Serif");
   ctx.strokeText(string, x, y);
   ctx.fillText(string, x, y);
+  ctx.lineJoin = 'miter';
 }
 // function for measuring the width of a string drawn on canvas
 function textWidth(string, size, font) {
