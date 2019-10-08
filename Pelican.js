@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.3";
+const PelicanVersion = "v2.9.4";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
@@ -309,7 +309,7 @@ class Noise{
     return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
   }
 }
-// function for getting JSON from file, callback gives 1 data argument
+// function for getting JSON from file, callback gives 1 data argument getJSON('path_to.json', (data) => console.log(data));
 function getJSON(path, callback) {
   const httpRequest = new XMLHttpRequest();
   httpRequest.onreadystatechange = () => {
