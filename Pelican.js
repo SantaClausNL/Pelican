@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.6";
+const PelicanVersion = "v2.9.7";
 window.addEventListener("load", () => PelicanSetup());
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
@@ -109,8 +109,8 @@ function line(x1, y1, x2, y2, width, color) {
   ctx.lineWidth = width;
   ctx.stroke();
 }
-// function for drawing a circle
-function circle(centerX, centerY, radius, color, strokeWidth) {
+// function for drawing an ellipse
+function ellipse(centerX, centerY, radius, color, strokeWidth) {
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, Math.PI*2, true);
   ctx.closePath();
