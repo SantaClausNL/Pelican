@@ -161,7 +161,7 @@ function img(x, y, image, angle, flip) {
     ctx.translate(x, y);
     if(flip === true) ctx.scale(-1, 1);
     ctx.rotate(angle);
-    try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line(-10, -10, 10, 10, 2, 'red'); line(10, -10, -10, 10, 2, 'red'); }
+    try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
   ctx.restore();
 }
 // function for an animation from a sprite sheet
