@@ -100,10 +100,10 @@ function roundedRect(x, y, w, h, r1, r2, r3, r4, color, strokeWidth) {
   }
 }
 // function for drawing a line between two points
-function line(x1, y1, x2, y2, width, color) {
+function line(points, width, color) {
   ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
+  ctx.moveTo(points[0].x, points[0].y);
+  for(let i = 1, l = points.length; i < l; i++) ctx.lineTo(points[i].x, points[i].y);
   ctx.closePath();
   ctx.strokeStyle = color;
   ctx.lineWidth = width;
