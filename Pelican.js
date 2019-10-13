@@ -6,7 +6,7 @@ let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
 
 function PelicanSetup() {
-  console.log("Pelican"+PelicanVersion+"by SantaClausNL. https://www.santaclausnl.ga/");
+  console.log("Pelican "+PelicanVersion+" by SantaClausNL. https://www.santaclausnl.ga/");
 
   mouse = vec();
   if(typeof preload === 'function') {
