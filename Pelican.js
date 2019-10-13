@@ -1,12 +1,12 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.8";
-window.addEventListener("load", () => PelicanSetup());
+const PelicanVersion = "v2.9.9";
+window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
 
 function PelicanSetup() {
-  console.log(`Pelican ${PelicanVersion} by SantaClausNL. https://www.santaclausnl.ga/`);
+  console.log("Pelican"+PelicanVersion+"by SantaClausNL. https://www.santaclausnl.ga/");
 
   mouse = vec();
   if(typeof preload === 'function') {
@@ -15,7 +15,7 @@ function PelicanSetup() {
     document.body.appendChild(loading);
     if(Pelican.toLoad <= 0) Continue(); else {
       let elapsedLoading = 0;
-      const loadingLoop = setInterval(() => { if(Pelican.toLoad <= 0 || elapsedLoading >= Pelican.LoadTimeout) {
+      const loadingLoop = setInterval(function() { if(Pelican.toLoad <= 0 || elapsedLoading >= Pelican.LoadTimeout) {
         clearInterval(loadingLoop);
         loading.remove();
         Continue();
@@ -42,8 +42,8 @@ function init(width_, height_, options) {
   width = c.width = width_ || 100, height = c.height = height_ || 100;
   c.id = "PelicanCanvas";
 
-  if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
-  if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
+  if(typeof keyPressed === 'function') window.addEventListener('keydown', function(e) { keyPressed(e); });
+  if(typeof keyReleased === 'function') window.addEventListener('keyup', function(e) { keyReleased(e); });
   window.addEventListener('mousemove', function(e) { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
   window.addEventListener('mousedown', function(e) { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
   window.addEventListener('mouseup', function(e) { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
