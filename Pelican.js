@@ -288,7 +288,7 @@ class Vector{
   mult(x, y) { if(!defined(y)) if(x instanceof Vector) this.x *= x.x, this.y *= x.y; else this.x *= x, this.y *= x; else this.x *= x, this.y *= y; }
   div(x, y) { if(!defined(y)) if(x instanceof Vector) this.x /= x.x, this.y /= x.y; else this.x /= x, this.y /= x; else this.x /= x, this.y /= y; }
   mag() { return Math.sqrt(this.x*this.x + this.y*this.y); }
-  norm() { return }
+  norm() { const mag = this.mag(); return vec(this.x/); }
   equals(vec) { return (this.x === vec.x && this.y === vec.y); }
   constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
   degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
