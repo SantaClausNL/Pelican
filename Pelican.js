@@ -44,9 +44,9 @@ function init(width_, height_, options) {
 
   if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
   if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
-  window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
-  window.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
-  window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
+  window.addEventListener('mousemove', function(e) { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
+  window.addEventListener('mousedown', function(e) { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
+  window.addEventListener('mouseup', function(e) { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
 }
 
 function resizeCanvas(width_, height_) { width = c.width = width_, height = c.height = height_; }
@@ -55,7 +55,7 @@ function PelicanUpdate(prevTime_) {
   const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
   ctx.imageSmoothingEnabled = Pelican.image_smoothing;
   update(elapsed);
-  window.requestAnimationFrame(() => PelicanUpdate(time));
+  window.requestAnimationFrame(function() { PelicanUpdate(time); });
 }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -190,7 +190,7 @@ function Sprite(opt) {
 function loadImage(src_) {
   Pelican.toLoad++;
   const img = new Image();
-  img.onload = () => Pelican.toLoad--;
+  img.onload = function() { Pelican.toLoad--; }
   img.src = src_;
   return img;
 }
@@ -287,6 +287,7 @@ class Vector{
   sub(x, y) { if(x instanceof Vector) this.x -= x.x, this.y -= x.y; else this.x -= x, this.y -= y; }
   mult(x, y) { if(!defined(y)) if(x instanceof Vector) this.x *= x.x, this.y *= x.y; else this.x *= x, this.y *= x; else this.x *= x, this.y *= y; }
   div(x, y) { if(!defined(y)) if(x instanceof Vector) this.x /= x.x, this.y /= x.y; else this.x /= x, this.y /= x; else this.x /= x, this.y /= y; }
+  mag() { return Math.sqrt(this.x*this.x + this.y*this.y); }
   equals(vec) { return (this.x === vec.x && this.y === vec.y); }
   constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
   degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
@@ -324,7 +325,7 @@ class Noise{
 // function for getting JSON from file, callback gives 1 data argument getJSON('path_to.json', (data) => console.log(data));
 function getJSON(path, callback) {
   const httpRequest = new XMLHttpRequest();
-  httpRequest.onreadystatechange = () => {
+  httpRequest.onreadystatechange = function() {
     if(httpRequest.readyState === 4 && httpRequest.status === 200) {
       const data = JSON.parse(httpRequest.responseText);
       if(defined(callback)) callback(data);
