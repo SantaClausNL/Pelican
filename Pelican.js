@@ -193,12 +193,15 @@ class Sprite{
     this.w = width_, this.h = height_;
     this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_ || 0;
     this.frames = frames_, this.frameTime = frameTime_;
+    this.currentFrame = 0;
   }
 
   draw(x, y, flip) {
+    this.currentFrame++;
+
     ctx.save();
       if(flip !== true) ctx.translate(x+(this.w/this.frames)/2, y); else { ctx.translate(x-(this.w/this.frames)/2, y); ctx.scale(-1, 1); }
-      ctx.drawImage(this.spriteSheet, (Pelican.frames%this.frames) * this.w / this.frames, this.sheetStart, width / this.frames, height, -width/this.frames, -height/2, width / this.frames, height);
+      ctx.drawImage(this.spriteSheet, (floor(Pelican.frames/this.frameTime)%this.frames) * this.w / this.frames, this.sheetStart, this.w / this.frames, this.h, -this.w/this.frames, -this.h/2, this.w / this.frames, this.h);
     ctx.restore();
   }
 }
