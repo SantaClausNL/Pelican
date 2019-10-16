@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.1";
+const PelicanVersion = "v2.10.2";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -166,28 +166,6 @@ function img(x, y, image, angle, flip) {
   ctx.restore();
 }
 // function for an animation from a sprite sheet
-// <name of sprite> = Sprite({
-// 	 spriteSheet: <sprite sheet>,
-//   width: <width of sprite on sheet>, (optional)
-//   height: <height of sprite on sheet>, (optional)
-//   sheetStart: <where to start vertically>, (optional)
-// 	 frames: <amount of frames>,
-// 	 frameTime: <time between frames>
-// });
-// <name of sprite>.draw(x, y, flip(optional)); in loop
-//function Sprite(opt) {
-//  let sprite = {}, frame = 0, tick = 0;
-//  sprite.draw = function(x, y, flip, noTick) {
-//    let width = opt.width || opt.spriteSheet.width, height = opt.height || opt.spriteSheet.height, sheetStart = opt.sheetStart || 0;
-//    if((noTick ? tick : ++tick) > opt.frameTime) { tick = 0; if(frame < opt.frames - 1) frame += 1; else frame = 0; }
-//    ctx.save();
-//    if(!flip) ctx.translate(x+(width/opt.frames)/2, y); else { ctx.translate(x-(width/opt.frames)/2, y); ctx.scale(-1, 1); }
-//    ctx.drawImage(opt.spriteSheet, frame * width / opt.frames, sheetStart, width / opt.frames, height, -width/opt.frames, -height/2, width / opt.frames, height);
-//    ctx.restore();
-//  }
-//  return sprite;
-//}
-
 class Sprite{
   constructor(width_, height_, spriteSheet_, frames_, frameTime_, sheetStart_) {
     this.w = width_, this.h = height_;
