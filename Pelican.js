@@ -160,9 +160,10 @@ function textWidth(string, size, font) {
 function img(x, y, image, angle, flip, width_, height_) {
   ctx.save();
     ctx.translate(x, y);
-    if(defined(width_)) ctx.scale((flip === true ?-1:1)*(width_/image.width), height_/image.height); else ctx.scale(flip === true ? -1 : 1, 1);
+    if(flip === true) ctx.scale(-1, 1);
     ctx.rotate(angle);
-    try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
+    try{ if(defined(width_)) ctx.drawImage(image, -image.width/2, -image.height/2, width_, height_); else ctx.drawImage(image, -image.width/2, -image.height/2);
+    } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
   ctx.restore();
 }
 // function for an animation from a sprite sheet
