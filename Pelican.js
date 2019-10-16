@@ -157,10 +157,10 @@ function textWidth(string, size, font) {
 
 //-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for drawing a centered image with rotation and ability to flip
-function img(x, y, image, angle, flip) {
+function img(x, y, image, angle, flip, width_, height_) {
   ctx.save();
     ctx.translate(x, y);
-    if(flip === true) ctx.scale(-1, 1);
+    if(defined(width_)) ctx.scale((flip === true ?-1:1)*(width_/image.width), height_/image.height); else 
     ctx.rotate(angle);
     try{ ctx.drawImage(image, -image.width/2, -image.height/2); } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
   ctx.restore();
