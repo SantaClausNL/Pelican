@@ -187,6 +187,12 @@ function Sprite(opt) {
   }
   return sprite;
 }
+
+class Sprite{
+  constructor(width_, height_, spriteSheet_, frames_, frameTime_, sheetStart_) {
+    this.w = width_, this.h = height_;
+  }
+}
 // function for loading images, call in preload
 function loadImage(src_) {
   Pelican.toLoad++;
