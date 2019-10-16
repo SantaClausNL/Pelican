@@ -1,9 +1,9 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.9.11";
+const PelicanVersion = "v2.9.12";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
-let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false};
+let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
 
 function PelicanSetup() {
   console.log("Pelican "+PelicanVersion+" by SantaClausNL. https://www.santaclausnl.ga/");
@@ -54,6 +54,7 @@ function resizeCanvas(width_, height_) { width = c.width = width_, height = c.he
 function PelicanUpdate(prevTime_) {
   const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
   ctx.imageSmoothingEnabled = Pelican.image_smoothing;
+  Pelican.frames++;
   update(elapsed);
   window.requestAnimationFrame(function() { PelicanUpdate(time); });
 }
