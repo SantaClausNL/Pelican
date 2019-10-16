@@ -197,8 +197,8 @@ class Sprite{
 
   draw(x, y, flip) {
     ctx.save();
-      if(flip === false) ctx.translate(x+(width/this.frames)/2, y); else { ctx.translate(x-(width/this.frames)/2, y); ctx.scale(-1, 1); }
-      ctx.drawImage(this.spriteSheet, (Pelican.frames%frames) * width / this.frames, this.sheetStart, width / this.frames, height, -width/this.frames, -height/2, width / this.frames, height);
+      if(flip !== true) ctx.translate(x+(this.w/this.frames)/2, y); else { ctx.translate(x-(this.w/this.frames)/2, y); ctx.scale(-1, 1); }
+      ctx.drawImage(this.spriteSheet, (Pelican.frames%this.frames) * this.w / this.frames, this.sheetStart, width / this.frames, height, -width/this.frames, -height/2, width / this.frames, height);
     ctx.restore();
   }
 }
