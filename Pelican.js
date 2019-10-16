@@ -192,16 +192,13 @@ class Sprite{
   constructor(width_, height_, spriteSheet_, frames_, frameTime_, sheetStart_) {
     this.w = width_, this.h = height_;
     this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_ || 0;
-    this.frames = frames_, this.frameTime = frameTime_;
-    this.frame = 0, this.spriteFrame = 0;
+    this.frames = frames_, this.frameTime = frameTime_, this.frame = 0;
   }
 
   draw(x, y, flip) {
-    this.frame++;
-
     ctx.save();
       if(flip !== true) ctx.translate(x+(this.w/this.frames)/2, y); else { ctx.translate(x-(this.w/this.frames)/2, y); ctx.scale(-1, 1); }
-      ctx.drawImage(this.spriteSheet, (this.spriteFrame%this.frames) * this.w / this.frames, this.sheetStart, this.w / this.frames, this.h, -this.w/this.frames, -this.h/2, this.w / this.frames, this.h);
+      ctx.drawImage(this.spriteSheet, (floor(++this.frame/this.frameTime)%this.frames) * this.w / this.frames, this.sheetStart, this.w / this.frames, this.h, -this.w/this.frames, -this.h/2, this.w / this.frames, this.h);
     ctx.restore();
   }
 }
