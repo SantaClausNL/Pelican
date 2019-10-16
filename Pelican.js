@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.2";
+const PelicanVersion = "v2.10.3";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -168,9 +168,15 @@ function img(x, y, image, angle, flip) {
 // function for an animation from a sprite sheet
 class Sprite{
   constructor(width_, height_, spriteSheet_, frames_, frameTime_, sheetStart_) {
-    this.w = width_, this.h = height_;
-    this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_ || 0;
-    this.frames = frames_, this.frameTime = frameTime_, this.frame = 0;
+    if(width_ instanceof Image) {
+      this.w = width_.width, this.h = width_.height;
+      this.spriteSheet = width_, this.sheetStart = frames_ || 0;
+      this.frames = height_, this.frameTime = spriteSheet_, this.frame = 0;
+    } else {
+      this.w = width_, this.h = height_;
+      this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_ || 0;
+      this.frames = frames_, this.frameTime = frameTime_, this.frame = 0;
+    }
   }
 
   draw(x, y, flip) {
