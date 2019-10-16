@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.0";
+const PelicanVersion = "v2.10.1";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -191,14 +191,14 @@ function img(x, y, image, angle, flip) {
 class Sprite{
   constructor(width_, height_, spriteSheet_, frames_, frameTime_, sheetStart_) {
     this.w = width_, this.h = height_;
-    this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_;
+    this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_ || 0;
     this.frames = frames_, this.frameTime = frameTime_;
   }
 
   draw(x, y, flip) {
     ctx.save();
-      if(!flip) ctx.translate(x+(width/opt.frames)/2, y); else { ctx.translate(x-(width/opt.frames)/2, y); ctx.scale(-1, 1); }
-      ctx.drawImage(opt.spriteSheet, (Pelican.frames%frames) * width / opt.frames, sheetStart, width / opt.frames, height, -width/opt.frames, -height/2, width / opt.frames, height);
+      if(flip === false) ctx.translate(x+(width/this.frames)/2, y); else { ctx.translate(x-(width/this.frames)/2, y); ctx.scale(-1, 1); }
+      ctx.drawImage(this.spriteSheet, (Pelican.frames%frames) * width / this.frames, this.sheetStart, width / this.frames, height, -width/this.frames, -height/2, width / this.frames, height);
     ctx.restore();
   }
 }
