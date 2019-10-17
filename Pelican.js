@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.7";
+const PelicanVersion = "v2.10.8";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -156,19 +156,19 @@ function textWidth(string, size, font) {
 }
 
 //-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-// function for drawing a centered image with rotation and ability to flip
+// function for drawing an image with rotation, flip and resize
 function img(x, y, image, angle, flip, width_, height_) {
-  const w, h;
-  if(defined(width_)) ctx.translate(-width_/2, -height_/2); else ctx.translate(-image.width/2, -image.height/2);
+  let w, h;
+  if(defined(width_)) w = width_, h = height_; else w = image.width, h = image.height;
   ctx.save();
+    ctx.translate(x, y);
     if(flip === true) ctx.scale(-1, 1);
     if(defined(angle)) {
-      if(defined(width_)) ctx.translate(-width_/2, -height_/2); else ctx.translate(-image.width/2, -image.height/2);
+      ctx.translate(-w/2, -h/2);
       ctx.rotate(angle);
-      if(defined(width_)) ctx.translate(-width_/2, -height_/2); else ctx.translate(-image.width/2, -image.height/2);      
+      ctx.translate(w/2, h/2);
     }
-    ctx.translate(x, y);
-    try{ if(defined(width_)) ctx.drawImage(image, 0, 0, width_, height_); else ctx.drawImage(image, 0, 0);
+    try{ if(defined(width_)) ctx.drawImage(image, 0, 0, w, h); else ctx.drawImage(image, 0, 0);
     } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
   ctx.restore();
 }
