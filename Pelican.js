@@ -162,7 +162,7 @@ function textWidth(string, size, font) {
 // function for drawing an image with rotation, flip and resize
 function img(x, y, image, angle, flip, width_, height_) {
   let w, h;
-  if(defined(width_)) w = width_, h = height_; else w = image.width, h = image.height;
+  if(defined(width_)) w = width_, h = height_; else w = image.width || 20, h = image.height || 20;
   ctx.save();
     if(defined(angle)) {
       ctx.translate(x+w/2, y+h/2);
