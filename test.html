@@ -7,16 +7,19 @@
   </head>
   <body>
     <script>
+      let image;
+
       function preload() {
-        
+        image = loadImage("Logo/Logo.png");
       }
 
       function setup() {
-
+        init(500, 500);
       }
 
       function update() {
-
+        clear('black');
+        img(0, 0, image, 0, 0, 100, 100);
       }
     </script>
   </body>

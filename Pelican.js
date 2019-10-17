@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.6";
+const PelicanVersion = "v2.10.7";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -159,7 +159,9 @@ function textWidth(string, size, font) {
 // function for drawing a centered image with rotation and ability to flip
 function img(x, y, image, angle, flip, width_, height_) {
   ctx.save();
-    if(defined(width_)) ctx.translate(-width_/2, -height_/2); else ctx.translate(image.width/2, image.height/2);
+    if(defined(ctx.rotate)) {
+
+    }
     if(flip === true) ctx.scale(-1, 1);
     ctx.rotate(angle);
     ctx.translate(x, y);
