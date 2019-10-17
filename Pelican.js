@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.10";
+const PelicanVersion = "v2.10.11";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -164,16 +164,16 @@ function img(x, y, image, angle, flip, width_, height_) {
     if(defined(angle)) {
       ctx.translate(x+w/2, y+h/2);
       ctx.rotate(angle);
-      if(flip === true) ctx.scale(-1, 1);
+      if(flip == true) ctx.scale(-1, 1);
       ctx.translate(-w/2, -h/2);
     } else {
-      if(flip === true) {
+      if(flip == true) {
         ctx.scale(-1, 1);
         ctx.translate(x-w, y);
       } else ctx.translate(x, y);
     }
     try{ if(defined(width_)) ctx.drawImage(image, 0, 0, w, h); else ctx.drawImage(image, 0, 0);
-      } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
+      } catch(err) { line([{x: 0, y: 0}, {x: 20, y: 20}], 2, 'red'); line([{x: 20, y: 0}, {x: 0, y: 20}], 2, 'red'); }
   ctx.restore();
 }
 // function for an animation from a sprite sheet
