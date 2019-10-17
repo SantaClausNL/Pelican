@@ -164,7 +164,7 @@ function img(x, y, image, angle, flip, width_, height_) {
     ctx.translate(x-w/2, y-h/2);
     if(flip === true) ctx.scale(-1, 1);
     ctx.rotate(angle);
-    try{ if(defined(width_)) ctx.drawImage(image, 0, 0, w, h); else ctx.drawImage(image, w/2, h/2);
+    try{ if(defined(width_)) ctx.drawImage(image, w/2, h/2, w, h); else ctx.drawImage(image, w/2, h/2);
     } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
   ctx.restore();
 }
