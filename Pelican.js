@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.8";
+const PelicanVersion = "v2.10.9";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -40,7 +40,7 @@ function init(width_, height_, options) {
     if(defined(options["parent"])) options["parent"].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
-  c.id = "PelicanCanvas";
+  c.id = "PelicanCanvas", c.innerHTML += "Your browser does not support HTML5 Canvas.";
 
   if(typeof keyPressed === 'function') window.addEventListener('keydown', function(e) { keyPressed(e); });
   if(typeof keyReleased === 'function') window.addEventListener('keyup', function(e) { keyReleased(e); });
@@ -161,11 +161,13 @@ function img(x, y, image, angle, flip, width_, height_) {
   let w, h;
   if(defined(width_)) w = width_, h = height_; else w = image.width, h = image.height;
   ctx.save();
-    ctx.translate(x-w/2, y-h/2);
+    //ctx.translate(x-w/2, y-h/2);
+    ctx.translate(x, y);
     if(flip === true) ctx.scale(-1, 1);
     ctx.rotate(angle);
-    try{ if(defined(width_)) ctx.drawImage(image, w/2, h/2, w, h); else ctx.drawImage(image, w/2, h/2);
-    } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
+    //try{ if(defined(width_)) ctx.drawImage(image, w/2, h/2, w, h); else ctx.drawImage(image, w/2, h/2);
+    try{ if(defined(width_)) ctx.drawImage(image, -w/2, -h/2, w, h); else ctx.drawImage(image, -w/2, -h/2);
+      } catch(err) { line([{x: -10, y: -10}, {x: 10, y: 10}], 2, 'red'); line([{x: 10, y: -10}, {x: -10, y: 10}], 2, 'red'); }
   ctx.restore();
 }
 // function for an animation from a sprite sheet
