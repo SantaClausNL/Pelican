@@ -7,19 +7,21 @@
   </head>
   <body>
     <script>
-      let image;
+      let image, image2;
 
       function preload() {
-        image = loadImage("../Logo/Logo.jpg");
+        image = loadImage("Logo/Logo.jpg");
+        image2 = loadImage("bull.crap");
       }
 
       function setup() {
-        init(500, 500, {image_smoothing: true});
+        init(200, 200, {image_smoothing: true});
       }
 
       function update() {
         clear('black');
-        img(0, 0, image, radians(10), 1);
+        img(0, 0, image, radians(10), 1, 100, 100);
+        img(100, 0, image, radians(-10), 1, 100, 100);
       }
     </script>
   </body>
