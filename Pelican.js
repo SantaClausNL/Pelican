@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
-const PelicanVersion = "v2.10.11";
+const PelicanVersion = "v2.10.13";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -15,11 +15,14 @@ function PelicanSetup() {
     document.body.appendChild(loading);
     if(Pelican.toLoad <= 0) Continue(); else {
       let elapsedLoading = 0;
-      const loadingLoop = setInterval(function() { if(Pelican.toLoad <= 0 || elapsedLoading >= Pelican.LoadTimeout) {
-        clearInterval(loadingLoop);
-        loading.remove();
-        Continue();
-      } else elapsedLoading += 25; }, 25);
+      const loadingLoop = setInterval(function() {
+        if(Pelican.toLoad <= 0 || elapsedLoading >= Pelican.loadTimeout) {
+          if(elapsedLoading >= Pelican.loadTimeout) console.warn("Failed to load assets.");
+          clearInterval(loadingLoop);
+          loading.remove();
+          Continue();
+        } else elapsedLoading += 25;
+      }, 25);
     }
   } else Continue();
 
