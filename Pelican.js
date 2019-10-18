@@ -1,5 +1,5 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-// main engine, https://www.santaclausnl.ga/projects/Pelican/Pelican.js
+// main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
 const PelicanVersion = "v2.10.14";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
