@@ -351,4 +351,17 @@ function loadFile(path, callback) {
   };
   httpRequest.open('GET', path);
   httpRequest.send();
+
+
+
+  const request = new XMLHttpRequest();
+  request.open("GET", file, false);
+  request.onreadystatechange = function() {
+      if(request.readyState === 4) {
+        if(request.status === 200 || request.status == 0) {
+          callback(request.responseText)
+        }
+      }
+    }
+    request.send(null);
 }
