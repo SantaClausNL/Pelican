@@ -342,26 +342,22 @@ class Noise{
 // function for getting a file, callback gives 1 data argument loadFile('path_to.file', (data) => console.log(data));
 // for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
 function loadFile(path, callback) {
-  const httpRequest = new XMLHttpRequest();
-  httpRequest.onreadystatechange = function() {
-    if(httpRequest.readyState === 4 && httpRequest.status === 200) {
-      const data = httpRequest.responseText;
-      if(defined(callback)) callback(data);
-    }
-  };
-  httpRequest.open('GET', path);
-  httpRequest.send();
+  //const httpRequest = new XMLHttpRequest();
+  //httpRequest.onreadystatechange = function() {
+  //  if(httpRequest.readyState === 4 && httpRequest.status === 200) {
+  //    const data = httpRequest.responseText;
+  //    if(defined(callback)) callback(data);
+  //  }
+  //};
+  //httpRequest.open('GET', path);
+  //httpRequest.send();
 
 
 
   const request = new XMLHttpRequest();
-  request.open("GET", file, false);
+  request.open("GET", path);
   request.onreadystatechange = function() {
-      if(request.readyState === 4) {
-        if(request.status === 200 || request.status == 0) {
-          callback(request.responseText)
-        }
-      }
-    }
-    request.send(null);
+    if(request.readyState === 4 && (request.status === 200 || request.status == 0)) callback(request.responseText);
+  }
+  request.send(null);
 }
