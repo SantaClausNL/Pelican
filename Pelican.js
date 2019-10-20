@@ -339,8 +339,8 @@ class Noise{
     return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
   }
 }
-// function for getting JSON from file, callback gives 1 data argument getJSON('path_to.json', (data) => console.log(data));
-function getJSON(path, callback) {
+// function for getting JSON from file, callback gives 1 data argument loadJSON('path_to.json', (data) => console.log(data));
+function loadJSON(path, callback) {
   const httpRequest = new XMLHttpRequest();
   httpRequest.onreadystatechange = function() {
     if(httpRequest.readyState === 4 && httpRequest.status === 200) {
