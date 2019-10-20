@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.14";
+const PelicanVersion = "v2.10.15";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -212,6 +212,8 @@ function loadImage(src_) {
 //-utility-functions----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // returns true if passed variable is not undefined
 function defined(variable) { return variable !== undefined; }
+// gives the element matching the id
+function $(id) { return document.getElementById(id); }
 // function for mapping a value
 function map(value, valLow, valHigh, resLow, resHigh) { return resLow + (resHigh - resLow) * (value - valLow) / (valHigh - valLow); }
 // replacement function for Math.random(), with only 1 argument it is random from 0 to argument
