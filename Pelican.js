@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.15";
+const PelicanVersion = "v2.10.16";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -340,6 +340,7 @@ class Noise{
   }
 }
 // function for getting a file, callback gives 1 data argument loadFile('path_to.file', (data) => console.log(data));
+// for JSON, loadFile('path_to.json', (data) => console.log(JSON(data)))
 function loadFile(path, callback) {
   const httpRequest = new XMLHttpRequest();
   httpRequest.onreadystatechange = function() {
