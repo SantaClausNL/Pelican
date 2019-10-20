@@ -340,7 +340,7 @@ class Noise{
   }
 }
 // function for getting a file, callback gives 1 data argument loadFile('path_to.file', (data) => console.log(data));
-// for JSON, loadFile('path_to.json', (data) => console.log(JSON(data)))
+// for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
 function loadFile(path, callback) {
   const httpRequest = new XMLHttpRequest();
   httpRequest.onreadystatechange = function() {
