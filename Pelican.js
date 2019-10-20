@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.16";
+const PelicanVersion = "v2.10.18";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -348,8 +348,8 @@ function loadFile(path, callback) {
     if(request.readyState === 4) {
       if(request.status === 200 || request.status == 0) {
         const data = request.responseText;
-        if(defined(callback)) callback(data); else console.warn("No callback for data.");
-      } else console.error("Error getting file: "+request.status);
+        if(defined(callback)) callback(data); else console.warn("Callback not defined.");
+      } else console.error("Error "+request.status+" getting file.");
     }
   }
   request.send(null);
