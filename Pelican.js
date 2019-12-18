@@ -346,6 +346,7 @@ class Noise{
 // function for getting a file, call in preload and give store variable in callback_, or supply callback takes gives 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
 // for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
 function loadFile(path_, callback_) {
+  let returnValue = {data: ""};
   const req = new XMLHttpRequest();
   req.open('GET', path_);
   if(typeof callback_ === "function") {
@@ -353,11 +354,13 @@ function loadFile(path_, callback_) {
   } else {
     Pelican.toLoad++;
     req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
-      callback_ = req.responseText;
+      returnValue.data = req.responseText;
       Pelican.toLoad--;
     } else fileError(req.status); }
   }
   req.send(null);
+
+  return returnValue;
 
   function fileError(status_) { console.error("Error "+status_+" getting file."); }
 }
