@@ -343,27 +343,21 @@ class Noise{
     return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
   }
 }
-// function for getting a file, call in preload or supply callback takes gives 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
+// function for getting a file, call in preload and give store variable in callback_, or supply callback takes gives 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
 // for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
 function loadFile(path_, callback_) {
   const req = new XMLHttpRequest();
   req.open('GET', path_);
-
-  if(defined(callback_)) {
-    req.onreadystatechange = function() {
-      if(req.readyState === 4) if(req.status === 200 || req.status == 0) callback_(req.responseText); else fileError(req.status);
-    }
+  if(typeof callback_ === "function") {
+    req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) callback_(req.responseText); else fileError(req.status); }
   } else {
     Pelican.toLoad++;
-    req.onreadystatechange = function() {
-      if(req.readyState === 4) if(req.status === 200 || req.status == 0) Pelican.toLoad--; else fileError(req.status);
-    }
+    req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
+      callback_ = req.responseText;
+      Pelican.toLoad--;
+    } else fileError(req.status); }
   }
-
   req.send(null);
-
-  const returnLoop = setInterval(function() { if(req.responseText !== "") clearInterval(returnLoop); }, 100);
-  return req.responseText;
 
   function fileError(status_) { console.error("Error "+status_+" getting file."); }
 }
