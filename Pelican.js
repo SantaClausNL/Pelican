@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.21";
+const PelicanVersion = "v2.10.22";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -358,9 +358,10 @@ function loadFile(path_, callback_) {
   } else {
     Pelican.toLoad++;
     req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
-      returnValue.data = req.responseText;
-      Pelican.toLoad--;
-    } else fileError(req.status); }
+        returnValue.data = req.responseText;
+        Pelican.toLoad--;
+      } else fileError(req.status);
+    }
   }
   req.send(null);
 
