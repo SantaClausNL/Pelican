@@ -361,9 +361,9 @@ function loadFile(path_, callback_) {
   }
 
   req.send(null);
-  const returnLoop = setInterval(function() {
-    if(req.responseText !== "") return req.responseText;
-  })
+
+  const returnLoop = setInterval(function() { if(req.responseText !== "") clearInterval(returnLoop); }, 100);
+  return req.responseText;
 
   function fileError(status_) { console.error("Error "+status_+" getting file."); }
 }
