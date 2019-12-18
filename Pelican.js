@@ -200,8 +200,8 @@ class Sprite{
     ctx.restore();
   }
 }
-// function for loading images, call in preload
-function loadImage(src_) {
+// function for loading images, call in preload or supply callback
+function loadImage(src_, callback_) {
   Pelican.toLoad++;
   const img = new Image();
   img.onload = function() { Pelican.toLoad--; }
