@@ -202,9 +202,13 @@ class Sprite{
 }
 // function for loading images, call in preload or supply callback
 function loadImage(src_, callback_) {
-  Pelican.toLoad++;
   const img = new Image();
-  img.onload = function() { Pelican.toLoad--; }
+  if(defined(callback_)) {
+    img.onload = function() { callback_(img); }
+  } else {
+    img.onload = function() { Pelican.toLoad--; }
+    Pelican.toLoad++;
+  }
   img.src = src_;
   return img;
 }
@@ -341,16 +345,34 @@ class Noise{
 }
 // function for getting a file, callback gives 1 data argument loadFile('path_to.file', (data) => console.log(data));
 // for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
-function loadFile(path, callback) {
-  const request = new XMLHttpRequest();
-  request.open('GET', path);
-  request.onreadystatechange = function() {
-    if(request.readyState === 4) {
-      if(request.status === 200 || request.status == 0) {
-        const data = request.responseText;
-        if(defined(callback)) callback(data); else console.warn("Callback not defined.");
-      } else console.error("Error "+request.status+" getting file.");
-    }
+function loadFile(path_, callback_) {
+  const img = new Image();
+  if(defined(callback_)) {
+    img.onload = function() { callback_(img); }
+  } else {
+    img.onload = function() { Pelican.toLoad--; }
+    Pelican.toLoad++;
   }
-  request.send(null);
+  img.src = src_;
+  return img;
+
+
+
+  Pelican.toLoad++;
+
+  if(defined(callback_)) {
+    const request = new XMLHttpRequest();
+    request.open('GET', path_);
+    request.onreadystatechange = function() {
+      if(request.readyState === 4) {
+        if(request.status === 200 || request.status == 0) {
+          const data = request.responseText;
+          if(defined(callback_)) callback_(data); else console.warn("Callback not defined.");
+        } else console.error("Error "+request.status+" getting file.");
+      }
+    }
+    request.send(null);  
+  } else {
+    
+  }
 }
