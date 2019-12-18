@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.19";
+const PelicanVersion = "v2.10.21";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -343,7 +343,7 @@ class Noise{
     return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
   }
 }
-// function for getting a file, callback gives 1 data argument loadFile('path_to.file', (data) => console.log(data));
+// function for getting a file, call in preload or supply callback takes gives 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
 // for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
 function loadFile(path_, callback_) {
   const req = new XMLHttpRequest();
@@ -351,15 +351,17 @@ function loadFile(path_, callback_) {
 
   if(defined(callback_)) {
     req.onreadystatechange = function() {
-      if(req.readyState === 4) if(req.status === 200 || req.status == 0) callback_(req.responseText); else console.error("Error "+req.status+" getting file.");
+      if(req.readyState === 4) if(req.status === 200 || req.status == 0) callback_(req.responseText); else fileError(req.status);
     }
   } else {
     Pelican.toLoad++;
     req.onreadystatechange = function() {
-      if(req.readyState === 4) if(req.status === 200 || req.status == 0) Pelican.toLoad--; else console.error("Error "+req.status+" getting file.");
+      if(req.readyState === 4) if(req.status === 200 || req.status == 0) Pelican.toLoad--; else fileError(req.status);
     }
   }
 
   req.send(null);
   return req.responseText;
+
+  function fileError(status_) { console.error("Error "+status_+" getting file."); }
 }
