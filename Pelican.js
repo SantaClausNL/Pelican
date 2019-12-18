@@ -361,7 +361,7 @@ function loadFile(path_, callback_) {
   }
 
   req.send(null);
-  return req.responseText;
+  return await data;
 
   function fileError(status_) { console.error("Error "+status_+" getting file."); }
 }
