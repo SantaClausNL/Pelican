@@ -346,33 +346,20 @@ class Noise{
 // function for getting a file, callback gives 1 data argument loadFile('path_to.file', (data) => console.log(data));
 // for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
 function loadFile(path_, callback_) {
-  const img = new Image();
-  if(defined(callback_)) {
-    img.onload = function() { callback_(img); }
-  } else {
-    img.onload = function() { Pelican.toLoad--; }
-    Pelican.toLoad++;
-  }
-  img.src = src_;
-  return img;
-
-
-
-  Pelican.toLoad++;
+  const req = new XMLHttpRequest();
+  req.open('GET', path_);
 
   if(defined(callback_)) {
-    const request = new XMLHttpRequest();
-    request.open('GET', path_);
-    request.onreadystatechange = function() {
-      if(request.readyState === 4) {
-        if(request.status === 200 || request.status == 0) {
-          const data = request.responseText;
-          if(defined(callback_)) callback_(data); else console.warn("Callback not defined.");
-        } else console.error("Error "+request.status+" getting file.");
-      }
+    req.onreadystatechange = function() {
+      if(req.readyState === 4) if(req.status === 200 || req.status == 0) callback_(req.responseText); else console.error("Error "+req.status+" getting file.");
     }
-    request.send(null);  
   } else {
-    
+    Pelican.toLoad++;
+    req.onreadystatechange = function() {
+      if(req.readyState === 4) if(req.status === 200 || req.status == 0) Pelican.toLoad--; else console.error("Error "+req.status+" getting file.");
+    }
   }
+
+  req.send(null);
+  return req.responseText;
 }
