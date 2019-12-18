@@ -343,14 +343,18 @@ class Noise{
     return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
   }
 }
-// function for getting a file, call in preload and give store variable in callback_, or supply callback takes gives 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
+// function for getting a file, call in preload and in code use variable.data, or supply callback that takes 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
 // for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
 function loadFile(path_, callback_) {
-  let returnValue = {data: ""};
+  let returnValue = {data: "", path: path_};
   const req = new XMLHttpRequest();
   req.open('GET', path_);
   if(typeof callback_ === "function") {
-    req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) callback_(req.responseText); else fileError(req.status); }
+    req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
+        returnValue.data = req.responseText;
+        callback_(req.responseText);
+      } else fileError(req.status);
+    }
   } else {
     Pelican.toLoad++;
     req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
