@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.22";
+const PelicanVersion = "v2.10.23";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -43,7 +43,8 @@ function init(width_, height_, options) {
     if(defined(options["parent"])) options["parent"].appendChild(c); else document.body.appendChild(c);
   }
   width = c.width = width_ || 100, height = c.height = height_ || 100;
-  c.id = "PelicanCanvas", c.innerHTML += "Your browser does not support HTML5 Canvas.";
+  c.id = defined(options["id"]) ? options["id"] : "PelicanCanvas";
+  c.innerHTML += "Your browser does not support HTML5 Canvas.";
 
   if(typeof keyPressed === 'function') window.addEventListener('keydown', function(e) { keyPressed(e); });
   if(typeof keyReleased === 'function') window.addEventListener('keyup', function(e) { keyReleased(e); });
