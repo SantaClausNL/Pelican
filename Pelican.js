@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.24";
+const PelicanVersion = "v2.10.25";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -301,7 +301,7 @@ function getMousePos(e) {
 }
 // 2D vector class
 class Vector{
-  constructor(x, y) { this.x = x || 0, this.y = y || 0; }
+  constructor(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x || 0, this.y = y || 0; }
   // x & y or other vector
   set(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
   add(x, y) { if(x instanceof Vector) this.x += x.x, this.y += x.y; else this.x += x, this.y += y; }
