@@ -39,7 +39,7 @@
 				if(ball.pos.y > height-ball.r || ball.pos.y < ball.r) ball.vel.y *= -1;
 				ball.pos.constrain(ball.r, width-ball.r, ball.r, height-ball.r);
 				ball.pos.add(ball.vel.x*elapsed, ball.vel.y*elapsed);
-				ellipse(ball.pos.x, ball.pos.y, ball.r, ball.col);
+				circle(ball.pos.x, ball.pos.y, ball.r, ball.col);
 				text(ball.pos.x, ball.pos.y+10, "DVD", 'black', 'center', 32, 'Comic Sans MS');
 			}
 		</script>
