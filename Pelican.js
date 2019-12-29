@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.29";
+const PelicanVersion = "v2.10.30";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0};
@@ -46,11 +46,11 @@ function init(width_, height_, options) {
 	c.id = defined(options["id"]) ? options["id"] : "PelicanCanvas";
 	c.innerHTML += "Your browser does not support HTML5 Canvas.";
 
-	if(typeof keyPressed === 'function') window.addEventListener('keydown', function(e) { keyPressed(e); });
-	if(typeof keyReleased === 'function') window.addEventListener('keyup', function(e) { keyReleased(e); });
-	window.addEventListener('mousemove', function(e) { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
-	window.addEventListener('mousedown', function(e) { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
-	window.addEventListener('mouseup', function(e) { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
+	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
+	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
+	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
+	window.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
+	window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
 }
 
 function resizeCanvas(width_, height_) { width = c.width = width_, height = c.height = height_; }
@@ -60,7 +60,7 @@ function PelicanUpdate(prevTime_) {
 	if(defined(ctx)) ctx.imageSmoothingEnabled = Pelican.imageSmoothing;
 	Pelican.frames++;
 	update(elapsed);
-	window.requestAnimationFrame(function() { PelicanUpdate(time); });
+	window.requestAnimationFrame(() => { PelicanUpdate(time); });
 }
 
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -232,9 +232,9 @@ class Sprite{
 function loadImage(src_, callback_) {
 	const img = new Image();
 	if(defined(callback_)) {
-		img.onload = function() { callback_(img); }
+		img.onload = () => { callback_(img); }
 	} else {
-		img.onload = function() { Pelican.toLoad--; }
+		img.onload = () => { Pelican.toLoad--; }
 		Pelican.toLoad++;
 	}
 	img.src = src_;
@@ -247,14 +247,14 @@ function loadFile(path_, callback_) {
 	const req = new XMLHttpRequest();
 	req.open('GET', path_);
 	if(typeof callback_ === "function") {
-		req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
+		req.onreadystatechange = () => { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
 				returnValue.data = req.responseText;
 				callback_(req.responseText);
 			} else fileError(req.status);
 		}
 	} else {
 		Pelican.toLoad++;
-		req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
+		req.onreadystatechange = () => { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
 				returnValue.data = req.responseText;
 				Pelican.toLoad--;
 			} else fileError(req.status);
@@ -388,7 +388,7 @@ Array.prototype.swap = function(i, j) {
 	this[j] = temp;
 }
 // an array shuffle function, call <array>.shuffle();
-Array.prototype.shuffle = function() {
+Array.prototype.shuffle = () => {
 	for(let i = this.length - 1; i >= 0; i--) {
 		const j = randomInt(i+1);
 		this.swap(i, j);
