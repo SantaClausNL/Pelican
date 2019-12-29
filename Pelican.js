@@ -1,9 +1,9 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.27";
+const PelicanVersion = "v2.10.29";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
-let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
+let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0};
 
 function PelicanSetup() {
 	console.log("Pelican "+PelicanVersion+" by SantaClausNL. https://www.santaclausnl.ga/");
@@ -34,7 +34,7 @@ function PelicanSetup() {
 
 function init(width_, height_, options) {
 	if(!defined(options)) options = {};
-	if(options["image_smoothing"] === true) Pelican.image_smoothing = true;
+	if(options["imageSmoothing"] === true) Pelican.imageSmoothing = true;
 	if(options["noUpdate"] === true) Pelican.noUpdate = true;
 	if(defined(options["canvas"])) {
 		c = options["canvas"], ctx = c.getContext('2d');
@@ -57,7 +57,7 @@ function resizeCanvas(width_, height_) { width = c.width = width_, height = c.he
 
 function PelicanUpdate(prevTime_) {
 	const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
-	if(defined(ctx)) ctx.imageSmoothingEnabled = Pelican.image_smoothing;
+	if(defined(ctx)) ctx.imageSmoothingEnabled = Pelican.imageSmoothing;
 	Pelican.frames++;
 	update(elapsed);
 	window.requestAnimationFrame(function() { PelicanUpdate(time); });
@@ -114,7 +114,7 @@ function line(points, width, color) {
 	ctx.stroke();
 }
 // function to draw a polygon with an arbitrary point set
-function line(points, color, strokeWidth) {
+function polygon(points, color, strokeWidth) {
 	ctx.beginPath();
 	ctx.moveTo(points[0].x, points[0].y);
 	for(let i = 1, l = points.length; i < l; i++) ctx.lineTo(points[i].x, points[i].y);
