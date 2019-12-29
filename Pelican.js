@@ -115,7 +115,20 @@ function line(points, width, color, close) {
 	ctx.stroke();
 }
 // function for drawing an ellipse
-function ellipse(centerX, centerY, radius, color, strokeWidth) {
+function ellipse(centerX, centerY, width, height, color, strokeWidth) {
+	ctx.beginPath();
+	ctx.ellipse(centerX, centerY, width, height);
+	if(!defined(strokeWidth)) {
+		ctx.fillStyle = color;
+		ctx.fill();
+	} else {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = strokeWidth;
+		ctx.stroke();
+	}
+}
+//function for drawing a circle
+function circle(centerX, centerY, radius, color, strokeWidth) {
 	ctx.beginPath();
 	ctx.arc(centerX, centerY, radius, 0, Math.PI*2, true);
 	ctx.closePath();
