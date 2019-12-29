@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.26";
+const PelicanVersion = "v2.10.27";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -109,10 +109,16 @@ function line(points, width, color, close) {
 	ctx.beginPath();
 	ctx.moveTo(points[0].x, points[0].y);
 	for(let i = 1, l = points.length; i < l; i++) ctx.lineTo(points[i].x, points[i].y);
-	if(close === true) ctx.closePath();
-	ctx.strokeStyle = color;
-	ctx.lineWidth = width;
-	ctx.stroke();
+	if(typeof width === "number") {
+		if(close === true) ctx.closePath();
+		ctx.strokeStyle = color;
+		ctx.lineWidth = width;
+		ctx.stroke();
+	} else {
+		ctx.closePath();
+		ctx.fillStyle = width;
+		ctx.fill();
+	}
 }
 // function for drawing an ellipse
 function ellipse(centerX, centerY, width, height, color, strokeWidth) {
