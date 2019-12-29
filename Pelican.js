@@ -105,18 +105,26 @@ function roundedRect(x, y, w, h, r1, r2, r3, r4, color, strokeWidth) {
 	}
 }
 // function for drawing a line between two points
-function line(points, width, color, close) {
+function line(points, width, color) {
 	ctx.beginPath();
 	ctx.moveTo(points[0].x, points[0].y);
 	for(let i = 1, l = points.length; i < l; i++) ctx.lineTo(points[i].x, points[i].y);
-	if(typeof width === "number") {
-		if(close === true) ctx.closePath();
+	ctx.strokeStyle = color;
+	ctx.lineWidth = width;
+	ctx.stroke();
+}
+// function to draw a polygon with an arbitrary point set
+function line(points, color, strokeWidth) {
+	ctx.beginPath();
+	ctx.moveTo(points[0].x, points[0].y);
+	for(let i = 1, l = points.length; i < l; i++) ctx.lineTo(points[i].x, points[i].y);
+	ctx.closePath();
+	if(defined(strokeWidth)) {
 		ctx.strokeStyle = color;
-		ctx.lineWidth = width;
+		ctx.lineWidth = strokeWidth;
 		ctx.stroke();
 	} else {
-		ctx.closePath();
-		ctx.fillStyle = width;
+		ctx.fillStyle = color;
 		ctx.fill();
 	}
 }
