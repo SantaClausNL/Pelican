@@ -113,7 +113,7 @@ function line(points, width, color) {
 	ctx.lineWidth = width;
 	ctx.stroke();
 }
-// function to draw a polygon with an arbitrary point set
+// function to draw a polygon with an arbitrary set of vectors
 function polygon(points, color, strokeWidth) {
 	ctx.beginPath();
 	ctx.moveTo(points[0].x, points[0].y);
