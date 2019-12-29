@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.25";
+const PelicanVersion = "v2.10.26";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseDown = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, image_smoothing: false, frames: 0};
@@ -159,7 +159,7 @@ function textWidth(string, size, font) {
 	return ctx.measureText(string).width;
 }
 
-//-image----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+//-assets---------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for drawing an image with rotation, flip and resize
 function img(x, y, image, angle, flip, width_, height_) {
 	let w, h;
@@ -213,12 +213,34 @@ function loadImage(src_, callback_) {
 	img.src = src_;
 	return img;
 }
+// function for getting a file, call in preload and in code use variable.data, or supply callback that takes 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
+// for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
+function loadFile(path_, callback_) {
+	let returnValue = {data: "", path: path_};
+	const req = new XMLHttpRequest();
+	req.open('GET', path_);
+	if(typeof callback_ === "function") {
+		req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
+				returnValue.data = req.responseText;
+				callback_(req.responseText);
+			} else fileError(req.status);
+		}
+	} else {
+		Pelican.toLoad++;
+		req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
+				returnValue.data = req.responseText;
+				Pelican.toLoad--;
+			} else fileError(req.status);
+		}
+	}
+	req.send(null);
 
-//-utility-functions----------------------------------------------------------------------------------------------------------------------------------------------------------------//
-// returns true if passed variable is not undefined
-function defined(variable) { return variable !== undefined; }
-// gives the element matching the id
-function $(id) { return document.getElementById(id); }
+	return returnValue;
+
+	function fileError(status_) { console.error("Error "+status_+" getting file."); }
+}
+
+//-math-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for mapping a value
 function map(value, valLow, valHigh, resLow, resHigh) { return resLow + (resHigh - resLow) * (value - valLow) / (valHigh - valLow); }
 // replacement function for Math.random(), with only 1 argument it is random from 0 to argument
@@ -279,26 +301,8 @@ function collide(pos, vel, w, h, objPos, objW, objH) {
 		}
 	}
 }
-// function to swap 2 elements of an array, call <array>.swap(i, j);
-Array.prototype.swap = function(i, j) {
-	const temp = this[i];
-	this[i] = this[j];
-	this[j] = temp;
-}
-// an array shuffle function, call <array>.shuffle();
-Array.prototype.shuffle = function() {
-	for(let i = this.length - 1; i >= 0; i--) {
-		const j = randomInt(i+1);
-		this.swap(i, j);
-	}
-}
 // lerp function
 function lerp(start, end, amt) { return start+amt*(end-start); }
-// get the mouse position in the form of a vector
-function getMousePos(e) {
-	const rect = c.getBoundingClientRect(), root = document.documentElement;
-	return vec(e.clientX-rect.left-root.scrollLeft, e.clientY-rect.top-root.scrollTop);
-}
 // 2D vector class
 class Vector{
 	constructor(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x || 0, this.y = y || 0; }
@@ -344,29 +348,27 @@ class Noise{
 		return lerp(this.r[xMin], this.r[xMax], t*t*(3-2*t)) * this.amp;
 	}
 }
-// function for getting a file, call in preload and in code use variable.data, or supply callback that takes 1 i.e. data argument loadFile('path_to.file', (data) => console.log(data));
-// for JSON, loadFile('path_to.json', (data) => console.log(JSON.parse(data)))
-function loadFile(path_, callback_) {
-	let returnValue = {data: "", path: path_};
-	const req = new XMLHttpRequest();
-	req.open('GET', path_);
-	if(typeof callback_ === "function") {
-		req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
-				returnValue.data = req.responseText;
-				callback_(req.responseText);
-			} else fileError(req.status);
-		}
-	} else {
-		Pelican.toLoad++;
-		req.onreadystatechange = function() { if(req.readyState === 4) if(req.status === 200 || req.status == 0) {
-				returnValue.data = req.responseText;
-				Pelican.toLoad--;
-			} else fileError(req.status);
-		}
+
+//-utility--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+// returns true if passed variable is not undefined
+function defined(variable) { return variable !== undefined; }
+// gives the element matching the id
+function $(id) { return document.getElementById(id); }
+// function to swap 2 elements of an array, call <array>.swap(i, j);
+Array.prototype.swap = function(i, j) {
+	const temp = this[i];
+	this[i] = this[j];
+	this[j] = temp;
+}
+// an array shuffle function, call <array>.shuffle();
+Array.prototype.shuffle = function() {
+	for(let i = this.length - 1; i >= 0; i--) {
+		const j = randomInt(i+1);
+		this.swap(i, j);
 	}
-	req.send(null);
-
-	return returnValue;
-
-	function fileError(status_) { console.error("Error "+status_+" getting file."); }
+}
+// get the mouse position in the form of a vector
+function getMousePos(e) {
+	const rect = c.getBoundingClientRect(), root = document.documentElement;
+	return vec(e.clientX-rect.left-root.scrollLeft, e.clientY-rect.top-root.scrollTop);
 }
