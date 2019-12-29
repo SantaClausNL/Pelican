@@ -396,6 +396,6 @@ Array.prototype.shuffle = () => {
 }
 // get the mouse position in the form of a vector
 function getMousePos(e) {
-	const rect = c.getBoundingClientRect(), root = document.documentElement;
+	const rect = c.getBoundingClientRect(), root = document.body;
 	return vec(e.clientX-rect.left-root.scrollLeft, e.clientY-rect.top-root.scrollTop);
 }
