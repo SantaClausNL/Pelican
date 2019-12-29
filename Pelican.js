@@ -15,7 +15,7 @@ function PelicanSetup() {
 		document.body.appendChild(loading);
 		if(Pelican.toLoad <= 0) Continue(); else {
 			let elapsedLoading = 0;
-			const loadingLoop = setInterval(function() {
+			const loadingLoop = setInterval(() => {
 				if(Pelican.toLoad <= 0 || elapsedLoading >= Pelican.loadTimeout) {
 					if(elapsedLoading >= Pelican.loadTimeout) console.warn("Failed to load assets.");
 					clearInterval(loadingLoop);
