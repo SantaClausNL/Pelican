@@ -1,8 +1,8 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.10.31";
+const PelicanVersion = "v2.10.32";
 window.addEventListener("load", PelicanSetup);
-let c, ctx, width, height, mouse = undefined, mouseDown = false;
+let c, ctx, width, height, mouse = undefined, mouseIsPressed = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0};
 
 function PelicanSetup() {
@@ -49,8 +49,8 @@ function init(width_, height_, options) {
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
 	if(typeof keyReleased === 'function') window.addEventListener('keyup', (e) => { keyReleased(e); });
 	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
-	window.addEventListener('mousedown', (e) => { mouseDown = true; if(typeof mousePressed === 'function') mousePressed(e); });
-	window.addEventListener('mouseup', (e) => { mouseDown = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
+	window.addEventListener('mousedown', (e) => { mouseIsPressed = true; if(typeof mousePressed === 'function') mousePressed(e); });
+	window.addEventListener('mouseup', (e) => { mouseIsPressed = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
 }
 
 function resizeCanvas(width_, height_) { width = c.width = width_, height = c.height = height_; }
