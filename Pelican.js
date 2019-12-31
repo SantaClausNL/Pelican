@@ -335,14 +335,14 @@ class Vector{
 	// x & y or other vector
 	constructor(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x || 0, this.y = y || 0; }
 	set(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
-	add(x, y) { return ((x instanceof Vector) ? vec(this.x + x.x, this.y + x.y) : vec(this.x + x, this.y + y)); }
-	sub(x, y) { return ((x instanceof Vector) ? vec(this.x - x.x, this.y - x.y) : vec(this.x - x, this.y - y)); }
+	add(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x + x.x, this.y + x.y) : vec(this.x + x, this.y + x)); } else { return vec(this.x + x, this.y + y); }}
+	sub(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x - x.x, this.y - x.y) : vec(this.x - x, this.y - x)); } else { return vec(this.x - x, this.y - y); }}
 	mult(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x * x.x, this.y * x.y) : vec(this.x * x, this.y * x)); } else { return vec(this.x * x, this.y * y); }}
-	div(x, y) { if(!defined(y)) if(x instanceof Vector) this.x /= x.x, this.y /= x.y; else this.x /= x, this.y /= x; else this.x /= x, this.y /= y; }
+	div(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x / x.x, this.y / x.y) : vec(this.x / x, this.y / x)); } else { return vec(this.x / x, this.y / y); }}
 	mag() { return Math.sqrt(this.x*this.x + this.y*this.y); }
 	norm() { const mag = this.mag(); return vec(this.x/mag, this.y/mag); }
 	equals(vec) { return (this.x === vec.x && this.y === vec.y); }
-	constrain(lowX, hiX, lowY, hiY) { this.x = constrain(this.x, lowX, hiX), this.y = constrain(this.y, lowY, hiY); }
+	constrain(lowX, hiX, lowY, hiY) { return vec(constrain(this.x, lowX, hiX), constrain(this.y, lowY, hiY)); }
 	degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
 	radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
 	fromAngle(angle, radius) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
