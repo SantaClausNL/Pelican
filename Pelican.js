@@ -337,7 +337,7 @@ class Vector{
 	set(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
 	add(x, y) { return ((x instanceof Vector) ? vec(this.x + x.x, this.y + x.y) : vec(this.x + x, this.y + y)); }
 	sub(x, y) { return ((x instanceof Vector) ? vec(this.x - x.x, this.y - x.y) : vec(this.x - x, this.y - y)); }
-	mult(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x * x.x, this.y * x.y) : vec(this.x * x, this.y * x)); } else return vec(this.x * x, this.y * y); }
+	mult(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x * x.x, this.y * x.y) : vec(this.x * x, this.y * x)); } else { return vec(this.x * x, this.y * y); }}
 	div(x, y) { if(!defined(y)) if(x instanceof Vector) this.x /= x.x, this.y /= x.y; else this.x /= x, this.y /= x; else this.x /= x, this.y /= y; }
 	mag() { return Math.sqrt(this.x*this.x + this.y*this.y); }
 	norm() { const mag = this.mag(); return vec(this.x/mag, this.y/mag); }
