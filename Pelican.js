@@ -335,7 +335,7 @@ class Vector{
 	// x & y or other vector
 	constructor(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x || 0, this.y = y || 0; }
 	set(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
-	add(x, y) { if(x instanceof Vector) this.x += x.x, this.y += x.y; else this.x += x, this.y += y; }
+	add(x, y) { return ((x instanceof Vector) this.x += x.x, this.y += x.y; else this.x += x, this.y += y; }
 	sub(x, y) { if(x instanceof Vector) this.x -= x.x, this.y -= x.y; else this.x -= x, this.y -= y; }
 	mult(x, y) { if(!defined(y)) if(x instanceof Vector) this.x *= x.x, this.y *= x.y; else this.x *= x, this.y *= x; else this.x *= x, this.y *= y; }
 	div(x, y) { if(!defined(y)) if(x instanceof Vector) this.x /= x.x, this.y /= x.y; else this.x /= x, this.y /= x; else this.x /= x, this.y /= y; }
