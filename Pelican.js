@@ -343,11 +343,10 @@ class Vector{
 	norm() { const mag = this.mag(); return vec(this.x/mag, this.y/mag); }
 	equals(vec) { return (this.x === vec.x && this.y === vec.y); }
 	constrain(lowX, hiX, lowY, hiY) { return vec(constrain(this.x, lowX, hiX), constrain(this.y, lowY, hiY)); }
-	degreesTo(vec) { return degrees(Math.atan2(vec.y - this.y, vec.x - this.x)); }
-	radiansTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
+	angleTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
 	fromAngle(angle, radius) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
 		if(!defined(radius)) radius = 1;
-		if(angle instanceof Vector) angle = this.radiansTo(angle);
+		if(angle instanceof Vector) angle = this.angleTo(angle);
 		return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
 	}
 	rotate(angle) { return vec(this.x*Math.cos(angle)-this.y*Math.sin(angle), this.x*Math.sin(angle)-this.y*Math.cos(angle)); }
