@@ -349,7 +349,6 @@ class Vector{
 		if(angle instanceof Vector) angle = this.angleTo(angle);
 		return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
 	}
-	rotate(angle) { return vec(this.x*Math.cos(angle)-this.y*Math.sin(angle), this.x*Math.sin(angle)-this.y*Math.cos(angle)); }
 	collides(x, y, w, h) { return (this.x < x+w && this.x > x && this.y < y+h && this.y > y); }
 }
 function vec(x, y) { return new Vector(x, y); }
