@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.11.0";
+const PelicanVersion = "v2.11.1";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseIsPressed = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0};
@@ -328,7 +328,7 @@ function collide(pos, vel, w, h, objPos, objW, objH) {
 		}
 	}
 }
-// lerp function
+// linear interpolation function
 function lerp(start, end, amt) { return start+amt*(end-start); }
 // 2D vector class
 class Vector{
