@@ -51,6 +51,7 @@ function init(width_, height_, options) {
 	window.addEventListener('mousemove', (e) => { mouse = getMousePos(e); if(typeof mouseMoved === 'function') mouseMoved(e); });
 	window.addEventListener('mousedown', (e) => { mouseIsPressed = true; if(typeof mousePressed === 'function') mousePressed(e); });
 	window.addEventListener('mouseup', (e) => { mouseIsPressed = false; if(typeof mouseReleased === 'function') mouseReleased(e); });
+	if(typeof windowResized === 'function') window.addEventListener('resize', (e) => windowResized(e));
 }
 
 function resizeCanvas(width_, height_) { width = c.width = width_, height = c.height = height_; }
