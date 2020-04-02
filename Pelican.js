@@ -1,9 +1,9 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.11.8";
+const PelicanVersion = "v2.11.9";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseIsPressed = false;
-let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0};
+let Pelican = { noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0 };
 
 function PelicanSetup() {
 	console.log("Pelican "+PelicanVersion+" by SantaClausNL. https://www.santaclausnl.ga/");
@@ -32,8 +32,7 @@ function PelicanSetup() {
 	}
 }
 
-function init(width_ = 100, height_ = 100, options) {
-	if(!defined(options)) options = {};
+function init(width_ = 100, height_ = 100, options = {}) {
 	if(options["imageSmoothing"] === true) Pelican.imageSmoothing = true;
 	if(options["noUpdate"] === true) Pelican.noUpdate = true;
 	if(defined(options["canvas"])) {
