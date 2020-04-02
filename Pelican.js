@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.11.3";
+const PelicanVersion = "v2.11.5";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseIsPressed = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0};
@@ -32,7 +32,7 @@ function PelicanSetup() {
 	}
 }
 
-function init(width_, height_, options) {
+function init(width_ = 100, height_ = 100, options) {
 	if(!defined(options)) options = {};
 	if(options["imageSmoothing"] === true) Pelican.imageSmoothing = true;
 	if(options["noUpdate"] === true) Pelican.noUpdate = true;
@@ -42,7 +42,7 @@ function init(width_, height_, options) {
 		c = document.createElement("CANVAS"), ctx = c.getContext('2d');
 		if(defined(options["parent"])) options["parent"].appendChild(c); else document.body.appendChild(c);
 	}
-	width = c.width = width_ || 100, height = c.height = height_ || 100;
+	width = c.width = width_, height = c.height = height_;
 	c.id = defined(options["id"]) ? options["id"] : "PelicanCanvas";
 	c.innerHTML += "Your browser does not support HTML5 Canvas.";
 
@@ -164,27 +164,27 @@ function circle(centerX, centerY, radius, color, strokeWidth) {
 //   font-family: "<font name>";
 //   src: url(assets/<font file>.ttf) format("truetype");
 // }
-function text(x, y, string, color, align, size, font) {
+function text(x, y, string, color, align = 'start', size = 10, font = 'Sans Serif') {
 	ctx.fillStyle = color;
-	ctx.textAlign = align || 'start'; // "start|left|end|right|center"
-	ctx.font = String(size || 10) + "px " + (font || "Sans-Serif");
+	ctx.textAlign = align; // "start|left|end|right|center"
+	ctx.font = String(size) + "px " + font;
 	ctx.fillText(string, x, y);
 }
 // draw text with a line around it
-function strokedText(x, y, string, color, strokeWidth, strokeColor, align, size, font) {
+function strokedText(x, y, string, color, strokeWidth, strokeColor, align = 'start', size = 10, font = 'Sans Serif') {
 	ctx.fillStyle = color;
 	ctx.strokeStyle = strokeColor;
 	ctx.lineWidth = strokeWidth;
 	ctx.lineJoin = 'round';
-	ctx.textAlign = align || 'start'; // "start|left|end|right|center"
-	ctx.font = String(size || 10) + "px " + (font || "Sans-Serif");
+	ctx.textAlign = align; // "start|left|end|right|center"
+	ctx.font = String(size) + "px " + font;
 	ctx.strokeText(string, x, y);
 	ctx.fillText(string, x, y);
 	ctx.lineJoin = 'miter';
 }
 // function for measuring the width of a string drawn on canvas
-function textWidth(string, size, font) {
-	ctx.font = String(size || 10) + "px " + (font || "Sans-Serif");
+function textWidth(string, size = 10, font = 'Sans Serif') {
+	ctx.font = String(size) + "px " + font;
 	return ctx.measureText(string).width;
 }
 
@@ -211,14 +211,14 @@ function img(x, y, image, angle, flip, width_, height_) {
 }
 // function for an animation from a sprite sheet
 class Sprite{
-	constructor(width_, height_, spriteSheet_, frames_, frameTime_, sheetStart_) {
+	constructor(width_, height_, spriteSheet_, frames_ = 0, frameTime_, sheetStart_ = 0) {
 		if(width_ instanceof Image) {
 			this.w = width_.width, this.h = width_.height;
-			this.spriteSheet = width_, this.sheetStart = frames_ || 0;
+			this.spriteSheet = width_, this.sheetStart = frames_;
 			this.frames = height_, this.frameTime = spriteSheet_, this.frame = 0;
 		} else {
 			this.w = width_, this.h = height_;
-			this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_ || 0;
+			this.spriteSheet = spriteSheet_, this.sheetStart = sheetStart_;
 			this.frames = frames_, this.frameTime = frameTime_, this.frame = 0;
 		}
 	}
