@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.11.5";
+const PelicanVersion = "v2.11.8";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseIsPressed = false;
 let Pelican = {noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0};
@@ -335,7 +335,7 @@ function lerp(start, end, amt) { return start+amt*(end-start); }
 // 2D vector class
 class Vector{
 	// x & y or other vector
-	constructor(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x || 0, this.y = y || 0; }
+	constructor(x = 0, y = 0) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
 	set(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
 	add(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x + x.x, this.y + x.y) : vec(this.x + x, this.y + x)); } else { return vec(this.x + x, this.y + y); }}
 	sub(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x - x.x, this.y - x.y) : vec(this.x - x, this.y - x)); } else { return vec(this.x - x, this.y - y); }}
@@ -365,8 +365,8 @@ function radians(degrees) { return degrees*Math.PI/180; }
 function degrees(radians) { return radians*180/Math.PI; }
 // Perlin Noise class, create 1 instance and get values via noise.value(x); function
 class Noise{
-	constructor(amp_, scl_) {
-		this.vertices = 256, this.amp = amp_ || 1, this.scl = scl_ || 0.05, this.r = [];
+	constructor(amp_ = 1, scl_ = 0.05) {
+		this.vertices = 256, this.amp = amp_, this.scl = scl_, this.r = [];
 		for(let i = 0; i < this.vertices; i++) this.r.push(Math.random());
 	}
 
