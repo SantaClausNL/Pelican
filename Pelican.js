@@ -1,6 +1,6 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
-const PelicanVersion = "v2.11.9";
+const PelicanVersion = "v2.11.10";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseIsPressed = false;
 let Pelican = { noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0 };
@@ -35,14 +35,14 @@ function PelicanSetup() {
 function init(width_ = 100, height_ = 100, options = {}) {
 	if(options["imageSmoothing"] === true) Pelican.imageSmoothing = true;
 	if(options["noUpdate"] === true) Pelican.noUpdate = true;
-	if(defined(options["canvas"])) {
+	if(options["canvas"] !== undefined) {
 		c = options["canvas"], ctx = c.getContext('2d');
 	} else {
 		c = document.createElement("CANVAS"), ctx = c.getContext('2d');
-		if(defined(options["parent"])) options["parent"].appendChild(c); else document.body.appendChild(c);
+		if(options["parent"] !== undefined) options["parent"].appendChild(c); else document.body.appendChild(c);
 	}
 	width = c.width = width_, height = c.height = height_;
-	c.id = defined(options["id"]) ? options["id"] : "PelicanCanvas";
+	c.id = (options["id"] !== undefined) ? options["id"] : "PelicanCanvas";
 	c.innerHTML += "Your browser does not support HTML5 Canvas.";
 
 	if(typeof keyPressed === 'function') window.addEventListener('keydown', (e) => { keyPressed(e); });
@@ -57,7 +57,7 @@ function resizeCanvas(width_, height_) { width = c.width = width_, height = c.he
 
 function PelicanUpdate(prevTime_) {
 	const time = window.performance.now(), elapsed = (time-prevTime_)/1000;
-	if(defined(ctx)) ctx.imageSmoothingEnabled = Pelican.imageSmoothing;
+	if(ctx !== undefined) ctx.imageSmoothingEnabled = Pelican.imageSmoothing;
 	Pelican.frames++;
 	update(elapsed);
 	window.requestAnimationFrame(() => { PelicanUpdate(time); });
@@ -66,14 +66,14 @@ function PelicanUpdate(prevTime_) {
 //-canvas--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // function for clearing a canvas //'rgba(r, g, b, 0-1)' as argument for motion blur
 function clear(color) {
-	if(defined(color)) {
+	if(color !== undefined) {
 		ctx.fillStyle = color;
 		ctx.fillRect(0, 0, width, height);
 	} else ctx.clearRect(0, 0, width, height);
 }
 // fuction for drawing a filled/stroked rectangle
 function rect(x, y, w, h, color, strokeWidth) {
-	if(!defined(strokeWidth)) {
+	if(strokeWidth === undefined) {
 		ctx.fillStyle = color;
 		ctx.fillRect(x, y, w, h);
 	} else {
@@ -95,7 +95,7 @@ function roundedRect(x, y, w, h, r1, r2, r3, r4, color, strokeWidth) {
 	ctx.lineTo(x, y + r1);
 	ctx.quadraticCurveTo(x, y, x + r1, y);
 	ctx.closePath();
-	if(!defined(strokeWidth)) {
+	if(strokeWidth === undefined) {
 		ctx.fillStyle = color;
 		ctx.fill();
 	} else {
@@ -120,7 +120,7 @@ function polygon(points, color, strokeWidth) {
 	ctx.moveTo(points[0].x, points[0].y);
 	for(let i = 1, l = points.length; i < l; i++) ctx.lineTo(points[i].x, points[i].y);
 	ctx.closePath();
-	if(defined(strokeWidth)) {
+	if(strokeWidth !== undefined) {
 		ctx.strokeStyle = color;
 		ctx.lineWidth = strokeWidth;
 		ctx.stroke();
@@ -133,7 +133,7 @@ function polygon(points, color, strokeWidth) {
 function ellipse(centerX, centerY, width, height, color, strokeWidth) {
 	ctx.beginPath();
 	ctx.ellipse(centerX, centerY, width, height);
-	if(!defined(strokeWidth)) {
+	if(strokeWidth === undefined) {
 		ctx.fillStyle = color;
 		ctx.fill();
 	} else {
@@ -147,7 +147,7 @@ function circle(centerX, centerY, radius, color, strokeWidth) {
 	ctx.beginPath();
 	ctx.arc(centerX, centerY, radius, 0, Math.PI*2, true);
 	ctx.closePath();
-	if(!defined(strokeWidth)) {
+	if(strokeWidth === undefined) {
 		ctx.fillStyle = color;
 		ctx.fill();
 	} else {
@@ -191,9 +191,9 @@ function textWidth(string, size = 10, font = 'Sans Serif') {
 // function for drawing an image with rotation, flip and resize
 function img(x, y, image, angle, flip, width_, height_) {
 	let w, h;
-	if(defined(width_)) w = width_, h = height_; else w = image.width || 20, h = image.height || 20;
+	if(width_ !== undefined) w = width_, h = height_; else w = image.width || 20, h = image.height || 20;
 	ctx.save();
-		if(defined(angle)) {
+		if(angle !== undefined) {
 			ctx.translate(x+w/2, y+h/2);
 			ctx.rotate(angle);
 			if(flip == true) ctx.scale(-1, 1);
@@ -204,7 +204,7 @@ function img(x, y, image, angle, flip, width_, height_) {
 				ctx.translate(x-w, y);
 			} else ctx.translate(x, y);
 		}
-		try{ if(defined(width_)) ctx.drawImage(image, 0, 0, w, h); else ctx.drawImage(image, 0, 0);
+		try{ if(width_ !== undefined) ctx.drawImage(image, 0, 0, w, h); else ctx.drawImage(image, 0, 0);
 			} catch(err) { line([{x: 0, y: 0}, {x: w, y: h}], 2, 'red'); line([{x: w, y: 0}, {x: 0, y: h}], 2, 'red'); }
 	ctx.restore();
 }
@@ -232,7 +232,7 @@ class Sprite{
 // function for loading images, call in preload or supply callback
 function loadImage(src_, callback_) {
 	const img = new Image();
-	if(defined(callback_)) {
+	if(callback_ !== undefined) {
 		img.onload = () => { callback_(img); }
 	} else {
 		img.onload = () => { Pelican.toLoad--; }
@@ -272,7 +272,7 @@ function loadFile(path_, callback_) {
 // function for mapping a value
 function map(value, valLow, valHigh, resLow, resHigh) { return resLow + (resHigh - resLow) * (value - valLow) / (valHigh - valLow); }
 // replacement function for Math.random(), with only 1 argument it is random from 0 to argument
-function random(low, high) { if(defined(high)) return Math.random() * (high-low) + low; else if(defined(low)) return Math.random() * low; else return Math.random(); }
+function random(low, high) { if(high !== undefined) return Math.random() * (high-low) + low; else if(low !== undefined) return Math.random() * low; else return Math.random(); }
 // replacement function for Math.random() rounded to integers
 function randomInt(low, high) { return floor(random(low, high)); }
 // replacement function for Math.round()
@@ -287,9 +287,9 @@ function constrain(val, minVal, maxVal) { if(val > maxVal) return maxVal; else i
 function sigmoid(val) { return 1/(1+Math.pow(Math.E, -val)); }
 // function to calculate the distance between 2 x,y pairs or 1 vector and 1 x,y pair or 2 vectors
 function dist(x1, y1, x2, y2) {
-	if(defined(y2)) {
+	if(y2 !== undefined) {
 		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-	} else if(defined(x2)) {
+	} else if(x2 !== undefined) {
 		return Math.sqrt((x2.x-x1)*(x2.x-x1) + (x2.y-y1)*(x2.y-y1));
 	} else {
 		return Math.sqrt((y1.x-x1.x)*(y1.x-x1.x) + (y1.y-x1.y)*(y1.y-x1.y));
@@ -336,17 +336,17 @@ class Vector{
 	// x & y or other vector
 	constructor(x = 0, y = 0) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
 	set(x, y) { if(x instanceof Vector) this.x = x.x, this.y = x.y; else this.x = x, this.y = y; }
-	add(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x + x.x, this.y + x.y) : vec(this.x + x, this.y + x)); } else { return vec(this.x + x, this.y + y); }}
-	sub(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x - x.x, this.y - x.y) : vec(this.x - x, this.y - x)); } else { return vec(this.x - x, this.y - y); }}
-	mult(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x * x.x, this.y * x.y) : vec(this.x * x, this.y * x)); } else { return vec(this.x * x, this.y * y); }}
-	div(x, y) { if(!defined(y)) { return ((x instanceof Vector) ? vec(this.x / x.x, this.y / x.y) : vec(this.x / x, this.y / x)); } else { return vec(this.x / x, this.y / y); }}
+	add(x, y) { if(y === undefined) { return ((x instanceof Vector) ? vec(this.x + x.x, this.y + x.y) : vec(this.x + x, this.y + x)); } else { return vec(this.x + x, this.y + y); }}
+	sub(x, y) { if(y === undefined) { return ((x instanceof Vector) ? vec(this.x - x.x, this.y - x.y) : vec(this.x - x, this.y - x)); } else { return vec(this.x - x, this.y - y); }}
+	mult(x, y) { if(y === undefined) { return ((x instanceof Vector) ? vec(this.x * x.x, this.y * x.y) : vec(this.x * x, this.y * x)); } else { return vec(this.x * x, this.y * y); }}
+	div(x, y) { if(y === undefined) { return ((x instanceof Vector) ? vec(this.x / x.x, this.y / x.y) : vec(this.x / x, this.y / x)); } else { return vec(this.x / x, this.y / y); }}
 	mag() { return Math.sqrt(this.x*this.x + this.y*this.y); }
 	norm() { const mag = this.mag(); return vec(this.x/mag, this.y/mag); }
 	equals(vec) { return (this.x === vec.x && this.y === vec.y); }
 	constrain(lowX, hiX, lowY, hiY) { return vec(constrain(this.x, lowX, hiX), constrain(this.y, lowY, hiY)); }
 	angleTo(vec) { return Math.atan2(vec.y - this.y, vec.x - this.x); }
 	fromAngle(angle, radius) { // gets a vector from an angle, or from the angle between vectors 'this' and 'angle' on the circumference of the circle with radius 'radius'
-		if(!defined(radius)) radius = 1;
+		if(radius === undefined) radius = 1;
 		if(angle instanceof Vector) angle = this.angleTo(angle);
 		return vec(Math.cos(angle) * radius + this.x, Math.sin(angle) * radius + this.y);
 	}
@@ -355,7 +355,7 @@ class Vector{
 function vec(x, y) { return new Vector(x, y); }
 // get vector from an angle
 function fromAngle(angle, radius) {
-	if(!defined(radius)) radius = 1;
+	if(radius === undefined) radius = 1;
 	return vec(Math.cos(angle) * radius, Math.sin(angle) * radius);
 }
 // convert degree angle to radians
