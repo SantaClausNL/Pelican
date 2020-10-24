@@ -388,7 +388,7 @@ Array.prototype.swap = function(i, j) {
 	this[j] = temp;
 }
 // an array shuffle function, call <array>.shuffle();
-Array.prototype.shuffle = () => {
+Array.prototype.shuffle = function() {
 	for(let i = this.length - 1; i >= 0; i--) {
 		const j = randomInt(i+1);
 		this.swap(i, j);
