@@ -1,12 +1,12 @@
 //-engine--------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-// main engine, https://projects.santaclausnl.ga/Pelican/Pelican.js
+// main engine, https://projects.brandond.nl/Pelican/Pelican.js
 const PelicanVersion = "v2.11.10";
 window.addEventListener("load", PelicanSetup);
 let c, ctx, width, height, mouse = undefined, mouseIsPressed = false;
 let Pelican = { noUpdate: false, toLoad: 0, loadTimeout: 5000, imageSmoothing: false, frames: 0 };
 
 function PelicanSetup() {
-	console.log("Pelican "+PelicanVersion+" by SantaClausNL. https://www.santaclausnl.ga/");
+	console.log("Pelican "+PelicanVersion+" by SantaClausNL. https://www.brandond.nl/");
 
 	mouse = vec();
 	if(typeof preload === 'function') {
